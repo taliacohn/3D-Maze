@@ -12,7 +12,7 @@ class Cell {
     get wallList() {
         return this.#wallList;
     }
-
+ 
     set wallList(wallList) {
         this.#wallList = wallList;
     }
