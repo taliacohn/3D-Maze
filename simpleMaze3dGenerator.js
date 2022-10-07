@@ -13,16 +13,18 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
      * 
      * @param {Maze3d} maze 
      */
-    constructor(maze) {
+    constructor(levels, row, col, maze) {
         super(maze);
         this.maze = maze;
-
+        this.levels = levels;
+        this.rows = row;
+        this.col = col;
     }
 
     generate() {
-        for (let z = 0; z < this.maze.levels; z++) {
-            for (let x = 0; x < this.maze.rows; x++) {
-                for (let y = 0; y < this.maze.columns; y+2) {
+        for (let z = 0; z < this.levels; z++) {
+            for (let x = 0; x < this.rows; x++) {
+                for (let y = 0; y < this.col; y++) {
 
                     /**
                      * @type {Cell}
@@ -32,37 +34,37 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
                     // Generate random walls for each cell 
                     if (z === 0) {
                         cell.wallList[3] = 1; // can't go down
-                    } else if (z === maze.levels - 1) {
+                    } else if (z === this.levels - 1) {
                         cell.wallList[2] = 1; // can't go up
                     } else {
-                        cell.wallList[3] = this.randomInt();
-                        cell.wallList[2] = this.randomInt();
+                        cell.wallList[3] = this.randomInt(2);
+                        cell.wallList[2] = this.randomInt(2);
                     }
 
                     if (x === 0) { // top row
                         cell.wallList[4] = 1;
-                    } else if (x === maze.rows -1) { // bottom row
+                    } else if (x === this.rows -1) { // bottom row
                         cell.wallList[5] = 1;
                     } else {
-                        cell.wallList[4] = this.randomInt();
-                        cell.wallList[5] = this.randomInt()
+                        cell.wallList[4] = this.randomInt(2);
+                        cell.wallList[5] = this.randomInt(2)
                     }
                     
                     if (y === 0) { // left end
                         cell.wallList[1] = 1; 
-                    } else if (y === maze.columns - 1) { // right end
+                    } else if (y === this.col - 1) { // right end
                         cell.wallList[0] = 1;
                     } else {
-                        cell.wallList[1] = this.randomInt();
-                        cell.wallList[0] = this.randomInt();
+                        cell.wallList[1] = this.randomInt(2);
+                        cell.wallList[0] = this.randomInt(2);
                     }
                 }
             }
         }
 
-        for (let z = 0; z < maze.levels; z++) {
-            for (let x = 0; x < maze.rows; x++) {
-                for (let y = 0; y < maze.columns; y++) {
+        for (let z = 0; z < this.levels; z++) {
+            for (let x = 0; x < this.rows; x++) {
+                for (let y = 0; y < this.col; y++) {
 
                     
 
@@ -70,7 +72,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
                 /**
                  * @type {Cell}
                  */
-                    const cell = maze.maze[z][x][y];
+                    const cell = this.maze.maze[z][x][y];
 
 
                     //this.DIRECTIONS = new Array([0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]);
@@ -79,7 +81,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
 
                     // making sure the neighbours match
                     for (i = 0; i < this.DIRECTIONS.length; i++) {
-                        let newCell = maze.maze[cell[0] + this.DIRECTIONS[i][0]][cell[1] + this.DIRECTIONS[i][1]][cell[2] + this.DIRECTIONS[i][2]];
+                        let newCell = this.maze.maze[cell[0] + this.DIRECTIONS[i][0]][cell[1] + this.DIRECTIONS[i][1]][cell[2] + this.DIRECTIONS[i][2]];
 
                         if (this.cellInMaze(newCell)) {
                             if (cell.wallList[i]) {
@@ -94,14 +96,14 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
             }
         }
 
-        this.maze.start = this.randomCell(this.maze);
-        this.maze.goal = this.randomCell(this.maze);
+        this.maze.start = this.randomCell(this.levels, this.rows, this.col);
+        this.maze.goal = this.randomCell(this.levels, this.rows, this.col);
         
 
         while (this.maze.start[0] === this.maze.goal[0] &&
             this.maze.start[1] === this.maze.goal[1] &&
             this.maze.start[2] === this.maze.goal[2]) {
-                this.maze.start = this.randomCell(this.maze);
+                this.maze.start = this.randomCell(this.levels, this.rows, this.col);
             }
 
         let currPos = this.maze.maze[start[0]][start[1]][start[2]];
@@ -142,12 +144,12 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
         }
         while (currPos[0] !== this.maze.goal[0] && currPos[1] !== this.maze.goal[1] && currPos[2] !== this.maze.goal[2]);
         
-        console.log(this.maze.maze.toString());
+        console.log(this.maze.toString());
         return this.maze;
     }
 }
 
 export default SimpleMaze3dGenerator;
 
-let newMaze = new SimpleMaze3dGenerator();
+let newMaze = new SimpleMaze3dGenerator(2, 5, 5);
 newMaze.generate();

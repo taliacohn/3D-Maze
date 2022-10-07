@@ -22,7 +22,7 @@ class Maze3dGenerator {
 
         }
 
-    generate(rows = 4, columns = 4, levels = 2, start, goal) {
+    generate(start, goal, rows = 4, columns = 4, levels = 2) {
         this.maze = new Maze3d(rows, columns, levels, start, goal);
         return this.maze;
     }
@@ -36,10 +36,10 @@ class Maze3dGenerator {
     }
 
 
-    randomCell(maze) {
-        const level = Math.floor(Math.random() * maze.levels);
-        const row = Math.floor(Math.random() * maze.rows);
-        const col = Math.floor(Math.random() * maze.columns);
+    randomCell(levels, rows, cols) {
+        const level = Math.floor(Math.random() * levels);
+        const row = Math.floor(Math.random() * rows);
+        const col = Math.floor(Math.random() * cols);
 
         return [level][row][col];
     }

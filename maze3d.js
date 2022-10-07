@@ -17,7 +17,7 @@ class Maze3d {
      * @param {number} columns 
      * @param {number} levels 
      */
-    constructor(rows=5, columns=5, levels=2, start, goal) {
+    constructor(start, goal, rows = 5, columns = 5, levels = 2) {
         this.start = start;
         this.goal = goal;
         this.rows = rows; // y
@@ -128,8 +128,8 @@ class Maze3d {
 }
 export default Maze3d;
     
-// let maze = new Maze3d(10, 5, 4, [1, 6, 3], [2, 3, 4])
-// console.log(maze.toString())
+let maze = new Maze3d([1, 6, 3], [2, 3, 4])
+console.log(maze.toString())
 
 
 
