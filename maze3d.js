@@ -11,10 +11,15 @@ like in the console (you can choose your own format).
 import Cell from "./cell.js";
 
 class Maze3d {
-    constructor(rows, columns, levels, start, goal, currLocation = start) {
+    /**
+     * 
+     * @param {number} rows 
+     * @param {number} columns 
+     * @param {number} levels 
+     */
+    constructor(rows=5, columns=5, levels=2, start, goal) {
         this.start = start;
         this.goal = goal;
-        this.currLocation = currLocation;
         this.rows = rows; // y
         this.columns = columns; // z
         this.levels = levels; // x
@@ -123,8 +128,8 @@ class Maze3d {
 }
 export default Maze3d;
     
-let maze = new Maze3d(10, 5, 4, [1, 6, 3], [2, 3, 4])
-console.log(maze.toString())
+// let maze = new Maze3d(10, 5, 4, [1, 6, 3], [2, 3, 4])
+// console.log(maze.toString())
 
 
 

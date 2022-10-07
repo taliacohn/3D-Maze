@@ -16,18 +16,13 @@ class Maze3dGenerator {
         if (this.constructor === Maze3dGenerator) {
             throw new Error('Abstract class cannot be instantiated');
         }
-        //level, row, column
         this.DIRECTIONS = new Array([0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]);
-        //     ['right', [0, 0, 1]], 
-        //     ['left', [0, 0, -1]],
-        //     ['up', [1, 0, 0]],
-        //     ['down', [-1, 0, 0]],
-        //     ['forward', [0, 1, 0]],
-        //     ['back', [0, -1, 0]]
-        // ])
+        //level, row, column
+        //right, left, up, down, forward, backward
+
         }
 
-    generate(rows = 4, columns = 4, levels = 3, start, goal) {
+    generate(rows = 4, columns = 4, levels = 2, start, goal) {
         this.maze = new Maze3d(rows, columns, levels, start, goal);
         return this.maze;
     }
@@ -40,21 +35,18 @@ class Maze3dGenerator {
         return `Runtime: ${runTime / 1000}s`;
     }
 
-    /**
-     * 
-     * @returns 
-     */
-    randomCell() {
-        const level = Math.floor(Math.random() * this.maze.levels);
-        const row = Math.floor(Math.random() * this.maze.rows);
-        const col = Math.floor(Math.random() * this.maze.columns);
 
-        return this.maze.maze[level][row][col];
+    randomCell(maze) {
+        const level = Math.floor(Math.random() * maze.levels);
+        const row = Math.floor(Math.random() * maze.rows);
+        const col = Math.floor(Math.random() * maze.columns);
+
+        return [level][row][col];
     }
     
     // Returns 1 or 0 for walls
-    randomInt() {
-        return Math.floor(Math.random() * 2)
+    randomInt(num) {
+        return Math.floor(Math.random() * num)
     }
 
     cellInMaze(cell) {
