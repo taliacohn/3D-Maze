@@ -12,9 +12,9 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
     /**
      * 
      * @param {Maze3d} maze 
-     */
+     */ 
     constructor(levels, row, col, maze) {
-        super(maze);
+        super(maze); 
         this.maze = maze;
         this.levels = levels;
         this.rows = row;
