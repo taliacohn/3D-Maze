@@ -81,6 +81,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
                 const nextDist = this.checkDistance(nextLoc, this.maze.goal);
                 if (currDist > nextDist) {
                     this.breakWalls(currLoc, nextLoc)
+                    currLoc = nextLoc;
                 }
             }
         }
