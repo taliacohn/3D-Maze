@@ -1,21 +1,23 @@
 class Cell {
-    #wallList
-    
-    constructor(level, row, col, right = 1, left = 1, up = 0, down = 0, forward = 0, backward = 1) {
-        // 1 for wall =, 0 for no wall
-        this.#wallList = [right, left, up, down, forward, backward];
-        this.level = level;
-        this.row = row;
-        this.col = col; 
-    }
+    constructor(levelNum, rowNum, colNum, maze) {
+        this.levelNum = levelNum;
+        this.rowNum = rowNum;
+        this.colNum = colNum; 
+        this.maze = maze;
 
-    get wallList() {
-        return this.#wallList;
+        this.visited = false; //start as false
+
+        // true for wall, false for no wall
+        // start as true by default
+        this.wallList = {
+            up : true,
+            down : true, 
+            right : true,
+            left : true,
+            forward: true,
+            backward : true,
+        };
     }
- 
-    // set wallList(wallList) {
-    //     this.#wallList = wallList;
-    // }
 }
 
 export default Cell; 

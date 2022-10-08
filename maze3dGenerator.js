@@ -12,17 +12,29 @@ sample the system time again. Return the elapsed time as a string with proper un
 import Maze3d from "./maze3d.js";
 
 class Maze3dGenerator {
-    constructor() {
+    /**
+     * 
+     * @param {Maze3d} maze 
+     */
+    constructor(maze) {
         if (this.constructor === Maze3dGenerator) {
             throw new Error('Abstract class cannot be instantiated');
         }
-        this.DIRECTIONS = new Array([0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]);
+        this.DIRECTIONS = new Map([
+            ['right', [0, 0, 1]], 
+            ['left', [0, 0, -1]], 
+            ['up', [1, 0, 0]], 
+            ['down', [-1, 0, 0]], 
+            ['forward', [0, 1, 0]], 
+            ['backward', [0, -1, 0]]
+        ]);
+        this.maze = maze;
         //level, row, column
         //right, left, up, down, forward, backward
 
         }
 
-    generate(start, goal, rows = 4, columns = 4, levels = 2) {
+    generate(start, goal, rows, columns, levels) {
         this.maze = new Maze3d(rows, columns, levels, start, goal);
         return this.maze;
     }
@@ -35,13 +47,12 @@ class Maze3dGenerator {
         return `Runtime: ${runTime / 1000}s`;
     }
 
-
     randomCell(levels, rows, cols) {
         const level = Math.floor(Math.random() * levels);
         const row = Math.floor(Math.random() * rows);
         const col = Math.floor(Math.random() * cols);
 
-        return [level][row][col];
+        return [level, row, col];
     }
     
     // Returns 1 or 0 for walls
@@ -49,40 +60,89 @@ class Maze3dGenerator {
         return Math.floor(Math.random() * num)
     }
 
-    cellInMaze(cell) {
-        if (cell[0] > 0 && cell[0] < this.maze.levels &&
-            cell[1] > 0 && cell[1] < this.maze.levels &&
-            cell[2] > 0 && cell[2] < this.maze.columns) {
+    /**
+     * 
+     * @param {Cell} cell 
+     * @param {Maze3d} maze 
+     * @returns boolean if cell is in maze
+     */
+    safeCell(cell, maze) {
+        // if inside grid - greater than 0 and less than # of levels/rows/cols
+        if (cell[0] > 0 && cell[0] < maze.maze.levels &&
+            cell[1] > 0 && cell[1] < maze.maze.rows &&
+            cell[2] > 0 && cell[2] < maze.maze.columns) {
                 return true;
             }
+        return false;
     }
 
-    //this.DIRECTIONS = new Array([0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]);
-                    //right, left, up, down, forward, backward
-
-    breakWalls(currPos, newPos, move) {
-        currPos = this.maze.maze[currPos[0]][currPos[1]][currPos[2]];
-        newPos = this.maze.maze[newPos[0]][newPos[1]][newPos[2]];
-        if (move[0] === 1) { //move up
-            currPos.wallList[2] = 0;
-            newPos.wallList[3] = 0; 
-        } else if (move[0] === -1) { //move down 
-            currPos.wallList[3] = 0;
-            newPos.wallList[2] = 0; 
-        } else if (move[1] === 1) { // forward
-            currPos.wallList[4] = 0;
-            newPos.wallList[5] = 0; 
-        } else if (move[1] === -1) { //backward
-            currPos.wallList[5] = 0;
-            newPos.wallList[4] = 0; 
-        } else if (move[2] === 1) { // rihgt
-            currPos.wallList[0] = 0;
-            newPos.wallList[1] = 0; 
-        } else if (move[2] === -1) { // left
-            currPos.wallList[1] = 0;
-            newPos.wallList[0] = 0; 
+    /**
+     * Breaks wall for current cell and neighbour cell for given move in Directions map
+     * @param {Cell} currLoc 
+     * @param {Cell} newLoc 
+     * @param {Map<key>} move 
+     */
+    breakWalls(currLoc, newLoc, move) {
+        switch(move) {
+            case 'right':
+                currLoc.wallList.right = 0;
+                newLoc.wallList.left = 0;
+                break;
+            case 'left':
+                currLoc.wallList.left = 0;
+                newLoc.wallList.right = 0;
+                break;
+            case 'up':
+                currLoc.wallList.up = 0;
+                newLoc.wallList.down = 0;
+                break;
+            case 'down':
+                currLoc.wallList.down = 0;
+                newLoc.wallList.up = 0;
+                break;
+            case 'forward':
+                currLoc.wallList.forward = 0;
+                newLoc.wallList.backward = 0;
+                break;
+            case 'backward':
+                currLoc.wallList.backward = 0;
+                newLoc.wallList.forward = 0;
+                break;
         }
+    }
 
+    // /**
+    //  * 
+    //  * @param {Cell} currLoc 
+    //  * @param {Maze3d} maze 
+    //  * returns list of neighbors of current cell
+    //  */
+    // findNeighbors(currLoc, maze) {
+    //     const level = currLoc[0];
+    //     const row = currLoc[1];
+    //     const col = currLoc[2];
+    //     let neighbors = [];
+
+    //     let down = level !== 0 ? maze.maze[level - 1][row][col]: undefined;
+    //     let up = level !== maze.maze.levels - 1 ? maze.maze[level + 1][row][col] : undefined;
+    //     let forward = row !== maze.maze.rows - 1 ? maze.maze[level][row - 1][col]: undefined;
+    //     let backward = row !== 0 ? maze.maze[level][row + 1] : undefined;
+    //     let right = col !== maze.maze.columns - 1 ? maze.maze[level][row][col + 1] : undefined;
+    //     let left = col !== 0 ? maze.maze[level][row][col - 1] : undefined;
+
+    //     if (up) neighbors.push(up);
+    //     if (down) neighbors.push(down);
+    //     if (forward) neighbors.push(forward);
+    //     if (backward) neighbors.push(backward);
+    //     if (right) neighbors.push(right);
+    //     if (left) neighbors.push(left);
+
+    //     return neighbors;
+    // }
+
+    checkDistance(currLoc, nextLoc) {
+        const d = Math.sqrt((currLoc[0] - nextLoc[0] ** 2) + (currLoc[1] - nextLoc[1] ** 2) + (currLoc[2] - nextLoc[2] ** 2));
+        return d;
     }
 }
 
