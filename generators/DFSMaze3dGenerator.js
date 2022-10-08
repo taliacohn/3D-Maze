@@ -40,6 +40,9 @@ class DFSMaze3dGenerator extends Maze3dGenerator{
             }
         } while (stack.length > 0);
 
+        // last curr cell when stack is empty = goal
+        currLoc.wallList.goal = true;
+
         return maze;
     }
 
