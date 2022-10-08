@@ -12,15 +12,20 @@ sample the system time again. Return the elapsed time as a string with proper un
 import Maze3d from "./maze3d.js";
 
 class Maze3dGenerator {
-    /**
-     * 
-     * @param {Maze3d} maze 
-     */
-    constructor(maze) {
+    #levels
+    #rows
+    #columns
+    #DIRECTIONS
+
+    constructor(levels, rows, columns) {
         if (this.constructor === Maze3dGenerator) {
             throw new Error('Abstract class cannot be instantiated');
         }
-        this.DIRECTIONS = new Map([
+        this.#levels = levels;
+        this.#rows = rows;
+        this.#columns = columns;
+
+        this.#DIRECTIONS = new Map([
             ['right', [0, 0, 1]], 
             ['left', [0, 0, -1]], 
             ['up', [1, 0, 0]], 
@@ -28,14 +33,27 @@ class Maze3dGenerator {
             ['forward', [0, 1, 0]], 
             ['backward', [0, -1, 0]]
         ]);
-        this.maze = maze;
-        //level, row, column
-        //right, left, up, down, forward, backward
+    }
 
-        }
+    get levels() {
+        return this.#levels;
+    }
 
-    generate(start, goal, rows, columns, levels) {
-        this.maze = new Maze3d(rows, columns, levels, start, goal);
+    get rows() {
+        return this.#rows;
+    }
+
+    get columns() {
+        return this.#columns;
+    }
+
+    get DIRECTIONS() {
+        return this.#DIRECTIONS;
+    }
+
+    // Returns instance of maze3d
+    generate() {
+        this.maze = new Maze3d(this.#levels, this.#rows, this.#columns);
         return this.maze;
     }
 
@@ -52,7 +70,7 @@ class Maze3dGenerator {
         const row = Math.floor(Math.random() * rows);
         const col = Math.floor(Math.random() * cols);
 
-        return [level, row, col];
+        return {level, row, col};
     }
     
     // Returns 1 or 0 for walls

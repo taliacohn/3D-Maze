@@ -16,7 +16,10 @@ class Cell {
             left : true,
             forward: true,
             backward : true,
+            start: false,
+            goal: false,
         };
+
     }
 }
 

@@ -11,22 +11,30 @@ like in the console (you can choose your own format).
 import Cell from "./cell.js";
 
 class Maze3d {
+    #rows
+    #columns
+    #levels
     /**
      * 
      * @param {number} rows 
      * @param {number} columns 
      * @param {number} levels 
      */
-    constructor(rows, columns, levels, start, goal) {
+    constructor(levels, rows, columns) {
+        this.#rows = rows; // y
+        this.#columns = columns; // z
+        this.#levels = levels; // x
         // this.start = start;
         // this.goal = goal;
-        this.rows = rows; // y
-        this.columns = columns; // z
-        this.levels = levels; // x
-        this.start = start;
-        this.goal = goal;
+        this.cellInput = new Map([
+            ['up', ' \u2191 '],
+            ['down', ' \u2193 '],
+            ['upDown', ' \u2195 '],
+            ['start', ' S '],
+            ['goal', ' G '],
+        ])
+
         this.maze = new Array();
-        this.stack =[];
 
         // Initialize maze with cells 
         for (let l = 0; l < this.levels; l++) {
@@ -44,32 +52,32 @@ class Maze3d {
         }
     }
 
+    get rows() {
+        return this.#rows;
+    }
+
+    get columns() {
+        return this.#columns;
+    }
+
+    get levels() {
+        return this.#levels;
+    }
 
     toString() {
         let printMaze = '';
-        const up = '\u2191';
-        const down = '\u2193';
-        const upAndDown = '\u2195';
         let rowLine = '';
+        const space = this.cellInput.get('empty');
+        const wall = this.cellInput.get('wall');
+        const up = this.cellInput.get('up');
+        const down = this.cellInput.get('down');
+        const upDown = this.cellInput.get('upDown');
+        const start = this.cellInput.get('start');
+        const goal = this.cellInput.get('goal');
 
         for (let level = 0; level < this.levels; level++) { // level
             printMaze += `Level ${level+1}\n`;
-            printMaze += '-'; // start of top border
-
-            //for (let z = 0; z < this.columns; z++) {  
-            printMaze += '----'.repeat(this.columns); // top border
-            printMaze += '\n'; //next line
-
-            // Maze [right, left, up, down, forward, backward]
-
-            // this.wallList = {
-            //     up : true,
-            //     down : true, 
-            //     right : true,
-            //     left : true,
-            //     forward: true,
-            //     backward : true,
-            // };
+            printMaze += '-' + '----'.repeat(this.columns) + '\n'; // start of top border
 
             for (let row = 0; row < this.rows; row++) { 
                 for (let col = 0; col < this.columns; col++) {
@@ -84,20 +92,16 @@ class Maze3d {
                         printMaze += ' ';
                     }
 
-                    if (this.start[0] === level &&
-                        this.start[1] === row &&
-                        this.start[2] === col) {
-                            printMaze += ' S ';
-                    } else if (this.goal[0] === level &&
-                        this.goal[1] === row &&
-                        this.goal[2] === col) {
-                            printMaze += ' G '
+                    if (cell.wallList.start) {
+                            printMaze += start;
+                    } else if (cell.wallList.goal) {
+                            printMaze += goal;
                     } else if (!cell.wallList.up && !cell.wallList.down) {
-                        printMaze += ' ' + upAndDown + ' ';
+                        printMaze += upDown;
                     } else if (!cell.wallList.up) {
-                        printMaze += ' ' + up + ' ';
+                        printMaze += up;
                     } else if (!cell.wallList.down) {
-                        printMaze += ' ' + down + ' '; 
+                        printMaze += down; 
                     } else {
                         printMaze += '   ';
                     }
@@ -132,7 +136,7 @@ class Maze3d {
 }
 export default Maze3d;
     
-let maze = new Maze3d(6, 6, 2, [0, 0, 0], [1, 2, 3]);
+let maze = new Maze3d(2, 5, 5);
 console.log(maze.toString())
 
 
