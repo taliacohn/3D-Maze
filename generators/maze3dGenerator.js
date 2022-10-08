@@ -72,6 +72,7 @@ class Maze3dGenerator {
 
         return {level, row, col};
     }
+
     
     // Returns 1 or 0 for walls
     randomInt(num) {
@@ -84,11 +85,14 @@ class Maze3dGenerator {
      * @param {Maze3d} maze 
      * @returns boolean if cell is in maze
      */
-    safeCell(cell, maze) {
+    safeCell(cell, direction, maze) {
         // if inside grid - greater than 0 and less than # of levels/rows/cols
-        if (cell[0] > 0 && cell[0] < maze.maze.levels &&
-            cell[1] > 0 && cell[1] < maze.maze.rows &&
-            cell[2] > 0 && cell[2] < maze.maze.columns) {
+        if ((cell[0] + direction[0] < maze.levels) &&
+            (cell[0] + direction[0] >= 0) &&
+            (cell[1] + direction[1] < maze.rows) &&
+            (cell[1] + direction[1] >= 0) &&
+            (cell[2] + direction[2] < maze.columns) &&
+            (cell[2] + direction[2] >= 0)) {
                 return true;
             }
         return false;
@@ -129,45 +133,51 @@ class Maze3dGenerator {
         }
     }
 
-    getRandomNeighbor(currLoc, maze) {
-        let lst = [];
-        for (const key of this.DIRECTIONS.keys()) {
-            lst.push(key);
+    getNeighbors(cell, maze) {
+        let cellNeighbors = new Map();
+        for (const [key, direction] of this.#DIRECTIONS.entries) {
+            if (this.safeCell(cell, direction, maze)) {
+                const neighbor = maze.maze[cell[0] + direction[0]][cell[1] + direction[1]][cell[2] + direction[2]];
+                if (!neighbor.visited) {
+                    cellNeighbors.set(key, neighbor);
+                }
+            }
         }
-
-        const neighborIdx = Math.floor(Math.random(lst.length));
-        const neighbor = lst[neighborIdx];
-        return neighbor;
+        return cellNeighbors;
     }
 
-    // /**
-    //  * 
-    //  * @param {Cell} currLoc 
-    //  * @param {Maze3d} maze 
-    //  * returns list of neighbors of current cell
-    //  */
-    // findNeighbors(currLoc, maze) {
-    //     const level = currLoc[0];
-    //     const row = currLoc[1];
-    //     const col = currLoc[2];
-    //     let neighbors = [];
+    chooseRandomNeighbor(map) {
+        let lst = [];
+        for (const key of map.keys()) {
+            lst.push(key);
+        }
+        
+        if (lst.length !== 0) {
+            let randomIdx = Math.floor(Math.random() * lst.length);
+            let randomKey = lst[randomIdx];
+            let randomNeighbor = map.get(randomKey);
+            return key, randomNeighbor
+        } else {
+            return false;
+        }
+        //return randomNeighbor;
+    }
 
-    //     let down = level !== 0 ? maze.maze[level - 1][row][col]: undefined;
-    //     let up = level !== maze.maze.levels - 1 ? maze.maze[level + 1][row][col] : undefined;
-    //     let forward = row !== maze.maze.rows - 1 ? maze.maze[level][row - 1][col]: undefined;
-    //     let backward = row !== 0 ? maze.maze[level][row + 1] : undefined;
-    //     let right = col !== maze.maze.columns - 1 ? maze.maze[level][row][col + 1] : undefined;
-    //     let left = col !== 0 ? maze.maze[level][row][col - 1] : undefined;
+    // returns random neighbor if safe
+    // getRandomNeighbor(currLoc, maze) {
 
-    //     if (up) neighbors.push(up);
-    //     if (down) neighbors.push(down);
-    //     if (forward) neighbors.push(forward);
-    //     if (backward) neighbors.push(backward);
-    //     if (right) neighbors.push(right);
-    //     if (left) neighbors.push(left);
 
-    //     return neighbors;
+    //     const neighborIdx = Math.floor(Math.random(lst.length));
+    //     const neighbor = lst[neighborIdx];
+
+    //     if(this.safeCell(currLoc, neighbor, maze)) {
+    //         return neighbor;
+    //     } else {
+    //         this.getRandomNeighbor(currLoc, maze);
+    //     }
     // }
+
+
 
     checkDistance(currLoc, nextLoc) {
         const d = Math.sqrt((currLoc[0] - nextLoc[0] ** 2) + (currLoc[1] - nextLoc[1] ** 2) + (currLoc[2] - nextLoc[2] ** 2));
