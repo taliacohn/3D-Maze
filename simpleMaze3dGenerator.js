@@ -67,14 +67,15 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
             }
 
         //carve path
-        let currLoc = this.maze.maze[start[0]][start[1]][start[2]];
+        let currLoc = this.maze.maze[this.maze.start[0]][this.maze.start[1]][this.maze.start[2]];
         let nextLoc;
 
         // TO DO: change to a function that finds cells neighbors and finds a random neighbor
         while (currLoc[0] !== this.maze.goal[0] && currLoc[1] !== this.maze.goal[1] && currLoc[2] !== this.maze.goal[2]) {
             // Get random move
-            const moveIdx = Math.floor(Math.random(this.DIRECTIONS.size));
-            const move = this.DIRECTIONS.get(moveIdx);
+            const moveKey = this.getRandomNeighbor();
+            const move = this.DIRECTIONS.get(moveKey);
+
             const nextLoc = this.maze.maze[currLoc[0] + move[0]][currLoc[1] + move[1]][currLoc[2] + move[2]];
             if (this.safeCell(move, this.maze)) {
                 const currDist = this.checkDistance(currLoc, nextLoc);
@@ -92,6 +93,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
 
 export default SimpleMaze3dGenerator;
 
-let newMaze = new SimpleMaze3dGenerator();
+let maze = new Maze3d(5, 5, 2, [0, 0 , 0], [1, 3, 3]);
+let newMaze = new SimpleMaze3dGenerator(maze);
 newMaze.generate();
 console.log(newMaze.measureAlgorithmTime());

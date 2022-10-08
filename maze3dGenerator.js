@@ -111,6 +111,16 @@ class Maze3dGenerator {
         }
     }
 
+    getRandomNeighbor(currLoc, maze) {
+        let lst = [];
+        for (const key of this.DIRECTIONS.keys()) {
+            lst.push(key);
+        }
+
+        neighborIdx = Math.floor(Math.random(lst.length));
+        return neighbor = lst[neighborIdx];
+    }
+
     // /**
     //  * 
     //  * @param {Cell} currLoc 
