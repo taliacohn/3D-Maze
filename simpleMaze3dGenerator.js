@@ -68,8 +68,6 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
 
         //carve path
         let currLoc = this.maze.maze[this.maze.start[0]][this.maze.start[1]][this.maze.start[2]];
-        let nextLoc;
-
         // TO DO: change to a function that finds cells neighbors and finds a random neighbor
         while (currLoc[0] !== this.maze.goal[0] && currLoc[1] !== this.maze.goal[1] && currLoc[2] !== this.maze.goal[2]) {
             // Get random move

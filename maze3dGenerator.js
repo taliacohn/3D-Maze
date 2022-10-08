@@ -117,8 +117,9 @@ class Maze3dGenerator {
             lst.push(key);
         }
 
-        neighborIdx = Math.floor(Math.random(lst.length));
-        return neighbor = lst[neighborIdx];
+        const neighborIdx = Math.floor(Math.random(lst.length));
+        const neighbor = lst[neighborIdx];
+        return neighbor;
     }
 
     // /**
