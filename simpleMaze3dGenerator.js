@@ -77,10 +77,10 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
             const move = this.DIRECTIONS.get(moveIdx);
             const nextLoc = this.maze.maze[currLoc[0] + move[0]][currLoc[1] + move[1]][currLoc[2] + move[2]];
             if (this.safeCell(move, this.maze)) {
-                const currDist = this.checkDistance(currLoc, move);
-                const nextDist = this.checkDistance(move, this.maze.goal);
+                const currDist = this.checkDistance(currLoc, nextLoc);
+                const nextDist = this.checkDistance(nextLoc, this.maze.goal);
                 if (currDist > nextDist) {
-                    this.breakWalls(currLoc, move)
+                    this.breakWalls(currLoc, nextLoc)
                 }
             }
         }
@@ -93,3 +93,4 @@ export default SimpleMaze3dGenerator;
 
 let newMaze = new SimpleMaze3dGenerator();
 newMaze.generate();
+console.log(newMaze.measureAlgorithmTime());
