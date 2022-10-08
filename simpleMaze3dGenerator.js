@@ -19,9 +19,9 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
     }
 
     generate() {
-        for (let level = 0; level < this.maze.levels; z++) {
-            for (let row = 0; row < this.maze.rows; x++) {
-                for (let col = 0; col < this.maze.col; y++) {
+        for (let level = 0; level < this.maze.levels; level++) {
+            for (let row = 0; row < this.maze.rows; row++) {
+                for (let col = 0; col < this.maze.col; col++) {
 
                     /**
                      * @type {Cell}
@@ -91,5 +91,5 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
 
 export default SimpleMaze3dGenerator;
 
-// let newMaze = new SimpleMaze3dGenerator();
-// newMaze.generate();
+let newMaze = new SimpleMaze3dGenerator();
+newMaze.generate();
