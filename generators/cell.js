@@ -1,8 +1,8 @@
 class Cell {
-    constructor(levelNum, rowNum, colNum, maze) {
-        this.levelNum = levelNum;
-        this.rowNum = rowNum;
-        this.colNum = colNum; 
+    constructor(level, row, col, maze) {
+        this.level = level;
+        this.row = row;
+        this.col = col; 
         this.maze = maze;
 
         this.visited = false; //start as false

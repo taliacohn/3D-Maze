@@ -61,8 +61,8 @@ class Maze3dGenerator {
         const start = Date.now();
         this.generate();
         const end = Date.now();
-        const runTime = (end - start).toFixed(2);
-        return `Runtime: ${runTime / 1000}s`;
+        const runTime = (end - start);
+        return `Runtime: ${(runTime / 1000).toFixed(2)}s`;
     }
 
     randomCell(levels, rows, cols) {
@@ -87,12 +87,12 @@ class Maze3dGenerator {
      */
     safeCell(cell, direction, maze) {
         // if inside grid - greater than 0 and less than # of levels/rows/cols
-        if ((cell[0] + direction[0] < maze.levels) &&
-            (cell[0] + direction[0] >= 0) &&
-            (cell[1] + direction[1] < maze.rows) &&
-            (cell[1] + direction[1] >= 0) &&
-            (cell[2] + direction[2] < maze.columns) &&
-            (cell[2] + direction[2] >= 0)) {
+        if ((cell.level + direction[0] < maze.levels) &&
+            (cell.level + direction[0] >= 0) &&
+            (cell.row + direction[1] < maze.rows) &&
+            (cell.row + direction[1] >= 0) &&
+            (cell.col + direction[2] < maze.columns) &&
+            (cell.col + direction[2] >= 0)) {
                 return true;
             }
         return false;
@@ -135,9 +135,9 @@ class Maze3dGenerator {
 
     getNeighbors(cell, maze) {
         let cellNeighbors = new Map();
-        for (const [key, direction] of this.#DIRECTIONS.entries) {
+        for (const [key, direction] of this.#DIRECTIONS.entries()) {
             if (this.safeCell(cell, direction, maze)) {
-                const neighbor = maze.maze[cell[0] + direction[0]][cell[1] + direction[1]][cell[2] + direction[2]];
+                const neighbor = maze.maze[cell.level + direction[0]][cell.row + direction[1]][cell.col + direction[2]];
                 if (!neighbor.visited) {
                     cellNeighbors.set(key, neighbor);
                 }
@@ -155,8 +155,7 @@ class Maze3dGenerator {
         if (lst.length !== 0) {
             let randomIdx = Math.floor(Math.random() * lst.length);
             let randomKey = lst[randomIdx];
-            let randomNeighbor = map.get(randomKey);
-            return key, randomNeighbor
+            return randomKey;
         } else {
             return false;
         }
@@ -180,8 +179,40 @@ class Maze3dGenerator {
 
 
     checkDistance(currLoc, nextLoc) {
-        const d = Math.sqrt((currLoc[0] - nextLoc[0] ** 2) + (currLoc[1] - nextLoc[1] ** 2) + (currLoc[2] - nextLoc[2] ** 2));
+        const d = Math.sqrt(((currLoc.level - nextLoc.level) ** 2) + ((currLoc.row - nextLoc.row) ** 2) + ((currLoc.col - nextLoc.col) ** 2));
         return d;
+    }
+
+    assignNeighbors(level, row, col, maze) {
+        let neighborDown = level !== 0 ? maze.maze[level - 1][row][col]: undefined;
+        let neighborUp = level !== maze.levels - 1 ? maze.maze[level + 1][row][col] : undefined;
+        let neighborBackward = row !== 0 ? maze.maze[level][row - 1][col]: undefined;
+        let neighborForward = row !== maze.rows - 1 ? maze.maze[level][row + 1][col] : undefined;
+        let neighborRight = col !== maze.columns - 1 ? maze.maze[level][row][col + 1] : undefined;
+        let neighborLeft = col !== 0 ? maze.maze[level][row][col - 1] : undefined;
+
+        return {neighborDown, neighborUp, neighborBackward, neighborForward, neighborRight, neighborLeft}
+    }
+
+    matchNeighborWalls(neighbor, cell) {
+        if (neighbor.neighborDown) {
+            neighbor.neighborDown.wallList.up = cell.wallList.down;
+        } 
+        if (neighbor.neighborUp) {
+            neighbor.neighborUp.wallList.down = cell.wallList.up;
+        } 
+        if (neighbor.neighborForward) {
+            neighbor.neighborForward.wallList.backward = cell.wallList.forward;
+        } 
+        if (neighbor.neighborBackward) {
+            neighbor.neighborBackward.wallList.forward = cell.wallList.backward;
+        } 
+        if (neighbor.neighborLeft) {
+            neighbor.neighborLeft.wallList.right = cell.wallList.left;
+        } 
+        if (neighbor.neighborRight) {
+            neighbor.neighborRight.wallList.left = cell.wallList.right;
+        }
     }
 }
 

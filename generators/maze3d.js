@@ -37,12 +37,12 @@ class Maze3d {
         this.maze = new Array();
 
         // Initialize maze with cells 
-        for (let l = 0; l < this.levels; l++) {
+        for (let l = 0; l < this.#levels; l++) {
             let mazeBoard = [];
-            for (let r = 0; r < this.rows; r++) {
+            for (let r = 0; r < this.#rows; r++) {
                 let row = [];
                 //this.maze[i][j] = new Array(this.columns);
-                for (let c = 0; c < this.columns; c++) {
+                for (let c = 0; c < this.#columns; c++) {
                     let cell = new Cell(l, r, c, this.maze);
                     row.push(cell);
                 }
@@ -67,20 +67,20 @@ class Maze3d {
     toString() {
         let printMaze = '';
         let rowLine = '';
-        const space = this.cellInput.get('empty');
-        const wall = this.cellInput.get('wall');
+        // const space = this.cellInput.get('empty');
+        // const wall = this.cellInput.get('wall');
         const up = this.cellInput.get('up');
         const down = this.cellInput.get('down');
         const upDown = this.cellInput.get('upDown');
         const start = this.cellInput.get('start');
         const goal = this.cellInput.get('goal');
 
-        for (let level = 0; level < this.levels; level++) { // level
+        for (let level = 0; level < this.#levels; level++) { // level
             printMaze += `Level ${level+1}\n`;
-            printMaze += '-' + '----'.repeat(this.columns) + '\n'; // start of top border
+            printMaze += '-' + '----'.repeat(this.#columns) + '\n'; // start of top border
 
-            for (let row = 0; row < this.rows; row++) { 
-                for (let col = 0; col < this.columns; col++) {
+            for (let row = 0; row < this.#rows; row++) { 
+                for (let col = 0; col < this.#columns; col++) {
                     /**
                      * @type {Cell}
                      */
@@ -106,9 +106,9 @@ class Maze3d {
                         printMaze += '   ';
                     }
                     
-                    if (cell.wallList.forward && col === this.columns - 1) { // not allowed forward & last col
+                    if (cell.wallList.forward && col === this.#columns - 1) { // not allowed forward & last col
                         rowLine += ' - |';
-                    } else if (col === this.columns - 1) { // can go forward, last col
+                    } else if (col === this.#columns - 1) { // can go forward, last col
                         rowLine += '   |'
                     } else if (cell.wallList.forward){ // can't go forward
                         rowLine += ' - +';
@@ -117,7 +117,7 @@ class Maze3d {
                     }
                 }
                 printMaze += '|\n|';
-                if (row < this.rows - 1) {
+                if (row < this.#rows - 1) {
                     printMaze += rowLine + '\n';
                 }
                 
@@ -126,7 +126,7 @@ class Maze3d {
 
         printMaze = printMaze.slice(0, printMaze.length - 1)
         printMaze += '-'
-        for (let z = 0; z < this.columns ; z++) {  
+        for (let z = 0; z < this.#columns ; z++) {  
             printMaze += '----'; // bottom border
         }
         printMaze += '\n\n';
@@ -136,8 +136,8 @@ class Maze3d {
 }
 export default Maze3d;
     
-let maze = new Maze3d(2, 5, 5);
-console.log(maze.toString())
+// let maze = new Maze3d(2, 5, 5);
+// console.log(maze.toString())
 
 
 

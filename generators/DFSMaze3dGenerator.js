@@ -15,23 +15,26 @@ class DFSMaze3dGenerator extends Maze3dGenerator{
     generate() {
         const maze = super.generate();
         let startValues = this.randomCell(maze.levels, maze.rows, maze.columns);
-        start = maze.maze[startValues.level][startValues.row][startValues.col]
+        let start = maze.maze[startValues.level][startValues.row][startValues.col]
         start.wallList.start = true;
 
-        let stack = []
+        let stack = [];
+        let visited = [];
         
-        let currLoc = maze.maze[start[0]][start[1]][start[2]];
+        let currLoc = maze.maze[start.level][start.row][start.col];
         currLoc.visited = true;
 
         do {
             let neighborMap = this.getNeighbors(currLoc, maze);
-            let key, nextLoc = this.chooseRandomNeighbor(neighborMap);
+            let key = this.chooseRandomNeighbor(neighborMap);
+            let nextLoc = neighborMap.get(key);
     
-            // if there is a neighbor that hasn't 
+            // if there is a neighbor that hasn't been visited
             if (nextLoc) {
                 nextLoc.visited = true;
                 // add current cell to stack
                 stack.push(currLoc);
+                visited.push(currLoc);
                 this.breakWalls(currLoc, nextLoc, key);
                 currLoc = nextLoc;
             } else {
@@ -41,7 +44,8 @@ class DFSMaze3dGenerator extends Maze3dGenerator{
         } while (stack.length > 0);
 
         // last curr cell when stack is empty = goal
-        currLoc.wallList.goal = true;
+        let goalCell = visited.pop();
+        goalCell.wallList.goal = true;
 
         return maze;
     }
