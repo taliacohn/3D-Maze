@@ -62,7 +62,8 @@ class Maze3dGenerator {
         this.generate();
         const end = Date.now();
         const runTime = (end - start);
-        return `Runtime: ${(runTime / 1000).toFixed(2)}s`;
+        //return `Runtime: ${(runTime / 1000).toFixed(2)}s`;
+        return `Runtime: ${runTime} ms`;
     }
 
     randomCell(levels, rows, cols) {
