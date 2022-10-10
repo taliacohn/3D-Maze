@@ -11,7 +11,7 @@ import Maze3dGenerator from "./maze3dGenerator.js";
 
 class AldousBroder3DMazeGenerator extends Maze3dGenerator {
     constructor(levels, rows, cols) {
-        super(levels, rows, cols)
+        super(levels, rows, cols);
     }
 
     generate() {
