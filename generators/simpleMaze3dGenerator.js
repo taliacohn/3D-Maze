@@ -94,7 +94,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
 
         //carve path
         let currLoc = maze.maze[start.level][start.row][start.col];
-        let lstTried = [];
+        let lstTried = new Set();
 
         while (currLoc != maze.maze[goal.level][goal.row][goal.col]) {
             // Get random move
@@ -103,7 +103,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
             
             //const move = this.DIRECTIONS.get(moveKey);
 
-            if (!lstTried.includes(moveKey) && this.safeCell(currLoc, move, maze)) {
+            if (!lstTried.has(moveKey) && this.safeCell(currLoc, move, maze)) {
                 const nextLoc = maze.maze[currLoc.level + move[0]][currLoc.row + move[1]][currLoc.col + move[2]];
                 const currDist = this.checkDistance(currLoc, goal);
                 const nextDist = this.checkDistance(nextLoc, goal);
@@ -111,10 +111,10 @@ class SimpleMaze3dGenerator extends Maze3dGenerator{
                         this.breakWalls(currLoc, nextLoc, moveKey);
                         currLoc = nextLoc;
                         moveKey = '';
-                        lstTried = [];
+                        lstTried = new Set();
                     }
             }
-            lstTried.push(moveKey);
+            lstTried.add(moveKey);
 
             
         }

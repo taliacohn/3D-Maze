@@ -25,7 +25,7 @@ class DFSMaze3dGenerator extends Maze3dGenerator{
         currLoc.visited = true;
 
         do {
-            let neighborMap = this.getNeighbors(currLoc, maze);
+            let neighborMap = this.getUnvisitedNeighbors(currLoc, maze);
             let key = this.chooseRandomNeighbor(neighborMap);
             let nextLoc = neighborMap.get(key);
     
@@ -49,8 +49,6 @@ class DFSMaze3dGenerator extends Maze3dGenerator{
 
         return maze;
     }
-
 }
-
 
 export default DFSMaze3dGenerator;

@@ -133,7 +133,7 @@ class Maze3dGenerator {
         }
     }
 
-    getNeighbors(cell, maze) {
+    getUnvisitedNeighbors(cell, maze) {
         let cellNeighbors = new Map();
         for (const [key, direction] of this.#DIRECTIONS.entries()) {
             if (this.safeCell(cell, direction, maze)) {
@@ -141,6 +141,17 @@ class Maze3dGenerator {
                 if (!neighbor.visited) {
                     cellNeighbors.set(key, neighbor);
                 }
+            }
+        }
+        return cellNeighbors;
+    }
+
+    getAllNeighbors(cell, maze) {
+        let cellNeighbors = new Map();
+        for (const [key, direction] of this.#DIRECTIONS.entries()) {
+            if (this.safeCell(cell, direction, maze)) {
+                const neighbor = maze.maze[cell.level + direction[0]][cell.row + direction[1]][cell.col + direction[2]];
+                cellNeighbors.set(key, neighbor);
             }
         }
         return cellNeighbors;
