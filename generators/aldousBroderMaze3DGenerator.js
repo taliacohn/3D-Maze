@@ -10,38 +10,39 @@ import Maze3dGenerator from "./maze3dGenerator.js";
     c) Make the chosen neighbour the current cell */
 
 class AldousBroder3DMazeGenerator extends Maze3dGenerator {
-    constructor(levels, rows, cols) {
-        super(levels, rows, cols);
+  constructor(levels, rows, cols) {
+    super(levels, rows, cols);
+  }
+
+  generate() {
+    const maze = super.generate();
+
+    let startValues = this.randomCell(maze.levels, maze.rows, maze.columns);
+    maze.start = maze.maze[startValues.level][startValues.row][startValues.col];
+    maze.start.wallList.start = true;
+
+    let cellsLeft = maze.levels * maze.rows * maze.columns - 1;
+    let currLoc = maze.maze[maze.start.level][maze.start.row][maze.start.col];
+
+    while (cellsLeft) {
+      let neighborMap = this.getAllNeighbors(currLoc, maze);
+      let key = this.chooseRandomNeighbor(neighborMap);
+      let nextLoc = neighborMap.get(key);
+
+      if (!nextLoc.visited) {
+        this.breakWalls(currLoc, nextLoc, key);
+        currLoc.visited = true;
+        currLoc = nextLoc;
+        cellsLeft -= 1;
+      } else {
+        currLoc = nextLoc;
+      }
     }
+    currLoc.wallList.goal = true;
+    maze.goal = maze.currLoc[level][row][col];
 
-    generate() {
-        const maze = super.generate();
-
-        let startValues = this.randomCell(maze.levels, maze.rows, maze.columns);
-        let start = maze.maze[startValues.level][startValues.row][startValues.col]
-        start.wallList.start = true;
-
-        let cellsLeft = maze.levels * maze.rows * maze.columns - 1;
-        let currLoc = maze.maze[start.level][start.row][start.col];
-
-        while (cellsLeft) {
-            let neighborMap = this.getAllNeighbors(currLoc, maze);
-            let key = this.chooseRandomNeighbor(neighborMap);
-            let nextLoc = neighborMap.get(key);
-
-            if (!nextLoc.visited) {
-                this.breakWalls(currLoc, nextLoc, key);
-                currLoc.visited = true;
-                currLoc = nextLoc;
-                cellsLeft -= 1;
-            } else {
-                currLoc = nextLoc;
-            }
-        }
-        currLoc.wallList.goal = true;
-
-        return maze;
-    }
+    return maze;
+  }
 }
 
-export default AldousBroder3DMazeGenerator; 
+export default AldousBroder3DMazeGenerator;
