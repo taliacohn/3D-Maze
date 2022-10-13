@@ -1,13 +1,14 @@
 /** Represents abstract class of general domain to be searched */
 class Searchable {
-  #startState;
-  #goalState;
+  // #startState;
+  // #goalState;
 
   constructor(problem) {
     if (this.constructor === Searchable) {
       throw new Error("Abstract class cannot be instantiated");
-      this.#goalState = problem.goal;
-      this.#startState = problem.start;
+      // this.#goalState = problem.goal;
+      // this.#startState = problem.start;
+      this.problem = problem;
     }
   }
 
@@ -31,3 +32,5 @@ class Searchable {
     // update location, update visited
   }
 }
+
+export default Searchable;

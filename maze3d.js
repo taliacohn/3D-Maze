@@ -14,6 +14,8 @@ class Maze3d {
   #rows;
   #columns;
   #levels;
+  #DIRECTIONS;
+
   /**
    *
    * @param {number} rows
@@ -32,6 +34,15 @@ class Maze3d {
       ["upDown", " \u2195 "],
       ["start", " S "],
       ["goal", " G "],
+    ]);
+
+    this.#DIRECTIONS = new Map([
+      ["right", [0, 0, 1]],
+      ["left", [0, 0, -1]],
+      ["up", [1, 0, 0]],
+      ["down", [-1, 0, 0]],
+      ["forward", [0, 1, 0]],
+      ["backward", [0, -1, 0]],
     ]);
 
     this.maze = new Array();
@@ -62,6 +73,10 @@ class Maze3d {
 
   get levels() {
     return this.#levels;
+  }
+
+  get directions() {
+    return this.#DIRECTIONS;
   }
 
   toString() {

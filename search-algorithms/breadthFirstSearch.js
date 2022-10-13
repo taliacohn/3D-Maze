@@ -22,7 +22,7 @@ class BreadthFirstSearch extends SearchAlgorithm {
 
     //check goal = node
     if (super.checkGoal(startNode, searchable)) {
-      this.#numberOfNodesEvaluated = visited.size;
+      this.#numOfNodesEvaluated = visited.size;
       return super.findPath(startNode, goalNode); // return solution
     }
 
@@ -41,7 +41,7 @@ class BreadthFirstSearch extends SearchAlgorithm {
         if (!visited.has(childNode.state) && !queue.has(childNode.state)) {
           //not in visited, not in frontier
           if (super.checkGoal(childNode, searchable)) {
-            this.#numberOfNodesEvaluated = visited.size;
+            this.#numOfNodesEvaluated = visited.size;
             return super.findPath();
           }
           queue.push(childNode.state);

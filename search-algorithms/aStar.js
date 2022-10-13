@@ -1,4 +1,4 @@
-import SearchAlgorithm from "./searchAlgorithm";
+import SearchAlgorithm from "./searchAlgorithm.js";
 
 class AStar extends SearchAlgorithm {
   #numOfNodesEvaluated;
@@ -31,7 +31,7 @@ class AStar extends SearchAlgorithm {
 
     //check goal = node
     if (super.checkGoal(startNode, searchable)) {
-      this.#numberOfNodesEvaluated = visited.size;
+      this.#numOfNodesEvaluated = visited.size;
       return super.findPath(startNode, goalNode); // return solution
     }
 

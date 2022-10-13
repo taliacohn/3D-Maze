@@ -1,8 +1,6 @@
 // defines all the common functionality of all the search algos
 // all have a search function that gets any searchable and returns a solution
 
-import Searchable from "./searchable.js";
-
 class SearchAlgorithm {
   #numberOfNodesEvaluated;
 
@@ -24,7 +22,7 @@ class SearchAlgorithm {
     return false;
   }
 
-  search(searchable) {
+  search() {
     throw new Error("Abstract Method not implemented");
   }
 
@@ -42,3 +40,5 @@ class SearchAlgorithm {
     return path;
   }
 }
+
+export default SearchAlgorithm;
