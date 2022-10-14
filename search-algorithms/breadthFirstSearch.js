@@ -15,38 +15,61 @@ class BreadthFirstSearch extends SearchAlgorithm {
   }
 
   search(searchable) {
-    let startNode = new Node(searchable.startState, undefined, 0); // Node = state, prevNode, cost
-    let goalNode = new Node(searchable.goalState, undefined, 0);
+    const startCell = searchable.startCell;
+    const goalCell = searchable.goalCell;
+    let startNode = new Node(startCell, null, 0); // Node = state, prevNode, cost
+    let goalNode = new Node(goalCell, null, 0);
     let queue = new Array(); // FIFO
     let visited = new Set();
 
-    //check goal = node
-    if (super.checkGoal(startNode, searchable)) {
-      this.#numOfNodesEvaluated = visited.size;
-      return super.findPath(startNode, goalNode); // return solution
-    }
-
-    queue.push(startNode.state);
+    queue.push(startNode);
 
     //while not empty
     while (queue.length > 0) {
-      // SHOULDNT THIS BE SHIFT SINCE FIFO?!?!?!
-      const node = queue.shift(); // chooses the shallowest node in queue
+      let node = queue.shift(); // chooses the shallowest node in queue
+      let currNodeState = {
+        level: node.state.level,
+        row: node.state.row,
+        col: node.state.col,
+      };
+      if (
+        !visited.has(
+          [currNodeState.level, currNodeState.row, currNodeState.col].toString()
+        )
+      ) {
+        visited.add(
+          [currNodeState.level, currNodeState.row, currNodeState.col].toString()
+        );
+      }
 
-      const neighbors = searchable.getStateTransitions(node, searchable); // gets a Map
+      if (super.checkGoal(node, searchable)) {
+        this.#numOfNodesEvaluated = visited.size;
+        return super.findPath(node); // return solution
+      }
 
-      for (const value of neighbors.values()) {
-        let childNode = new Node(value, node, 0);
-        this.#numOfNodesEvaluated += 1;
-        if (!visited.has(childNode.state) && !queue.has(childNode.state)) {
-          //not in visited, not in frontier
-          if (super.checkGoal(childNode, searchable)) {
-            this.#numOfNodesEvaluated = visited.size;
-            return super.findPath();
+      const neighbors = searchable.getStateTransitions(
+        currNodeState,
+        searchable
+      );
+
+      if (neighbors) {
+        // explore all neighbors
+        for (const neighbor of neighbors) {
+          let childNodeState =
+            searchable.problem.maze[neighbor[0]][neighbor[1]][neighbor[2]];
+          let childNode = new Node(childNodeState, node, 0);
+          if (
+            !visited.has(
+              [
+                childNodeState.level,
+                childNodeState.row,
+                childNodeState.col,
+              ].toString()
+            )
+          ) {
+            queue.push(childNode);
           }
-          queue.push(childNode.state);
         }
-        visited.add(node.state); // add to explored
       }
     }
     return false;

@@ -14,7 +14,6 @@ class Maze3d {
   #rows;
   #columns;
   #levels;
-  #DIRECTIONS;
 
   /**
    *
@@ -34,15 +33,6 @@ class Maze3d {
       ["upDown", " \u2195 "],
       ["start", " S "],
       ["goal", " G "],
-    ]);
-
-    this.#DIRECTIONS = new Map([
-      ["right", [0, 0, 1]],
-      ["left", [0, 0, -1]],
-      ["up", [1, 0, 0]],
-      ["down", [-1, 0, 0]],
-      ["forward", [0, 1, 0]],
-      ["backward", [0, -1, 0]],
     ]);
 
     this.maze = new Array();
@@ -73,10 +63,6 @@ class Maze3d {
 
   get levels() {
     return this.#levels;
-  }
-
-  get directions() {
-    return this.#DIRECTIONS;
   }
 
   toString() {
@@ -150,22 +136,6 @@ class Maze3d {
       printMaze += "\n\n";
     }
     return printMaze;
-  }
-
-  getUnvisitedNeighbors(cell, maze) {
-    let cellNeighbors = new Map();
-    for (const [key, direction] of this.#DIRECTIONS.entries()) {
-      if (this.safeCell(cell, direction, maze)) {
-        const neighbor =
-          maze.maze[cell.level + direction[0]][cell.row + direction[1]][
-            cell.col + direction[2]
-          ];
-        if (!neighbor.visited) {
-          cellNeighbors.set(key, neighbor);
-        }
-      }
-    }
-    return cellNeighbors;
   }
 }
 export default Maze3d;

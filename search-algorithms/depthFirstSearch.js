@@ -21,33 +21,60 @@ class DepthFirstSearch extends SearchAlgorithm {
     let stack = new Array(); // LIFO - visited, but not explored
     let visited = new Set(); // visited and explored
 
-    //check goal = node
-    if (super.checkGoal(startNode, searchable)) {
-      this.#numOfNodesEvaluated = visited.size;
-      return super.findPath(startNode, goalNode); // return solution
-    }
-
-    stack.push(node.state); // visited, but not explored start node yet
+    //let state = this.getState(startNode);
+    stack.push(startNode); // visited, but not explored start node yet
 
     //while not empty
     while (stack.length > 0) {
-      node = stack.pop(); // take one node from frontier to explore neighbors
+      let node = stack.pop(); // take one node from frontier to explore neighbors
 
-      const neighbors = searchable.getStateTransitions(node, searchable); // gets a Map
+      let currNodeState = {
+        level: node.state.level,
+        row: node.state.row,
+        col: node.state.col,
+      };
 
-      for (const value of neighbors.values()) {
+      if (
+        !visited.has(
+          [currNodeState.level, currNodeState.row, currNodeState.col].toString()
+        )
+      ) {
+        visited.add(
+          [currNodeState.level, currNodeState.row, currNodeState.col].toString()
+        );
+      }
+
+      //check if node = goal
+      if (super.checkGoal(node, searchable)) {
+        this.#numOfNodesEvaluated = visited.size;
+        return super.findPath(node); // return solution
+      }
+
+      // get neighbours in array
+      const neighbors = searchable.getStateTransitions(
+        currNodeState,
+        searchable
+      );
+
+      // if neighbors list not empty
+      if (neighbors) {
         // explore all neighbors
-        let childNode = new Node(value, node, 0);
-        this.#numOfNodesEvaluated += 1;
-        if (!visited.has(childNode.state) && !stack.has(childNode.state)) {
-          //not in visited, not in frontier
-          if (super.checkGoal(startNode, searchable)) {
-            this.#numOfNodesEvaluated = visited.size;
-            return super.findPath(startNode, goalNode); // return solution
+        for (const neighbor of neighbors) {
+          let childNodeState =
+            searchable.problem.maze[neighbor[0]][neighbor[1]][neighbor[2]];
+          let childNode = new Node(childNodeState, node, 0);
+          if (
+            !visited.has(
+              [
+                childNodeState.level,
+                childNodeState.row,
+                childNodeState.col,
+              ].toString()
+            )
+          ) {
+            stack.push(childNode);
           }
-          stack.push(childNode.state);
         }
-        visited.add(node.state); // add to explored
       }
     }
     return false;
