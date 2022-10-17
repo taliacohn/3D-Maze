@@ -37,7 +37,8 @@ function validateForm(form) {
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
     form.preventDefault();
-  } else {
-    //start game
   }
+  //   else {
+  //     //start game
+  //   }
 }

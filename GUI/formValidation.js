@@ -4,7 +4,7 @@ class FormValidation {
   nameError() {
     let valid = true;
     const name = document.getElementById("name");
-    let nameErrorMessage = document.getElementById("nameError");
+    let nameErrorMessage = document.querySelector("#nameError");
 
     if (!name.checkValidity()) {
       this.displayNameError(name, nameErrorMessage);
@@ -29,7 +29,7 @@ class FormValidation {
   rowError() {
     let valid = true;
     const row = document.getElementById("row");
-    const rowErrorMessage = document.getElementById("rowError");
+    const rowErrorMessage = document.querySelector("#rowError");
 
     if (!row.checkValidity()) {
       this.displayNumError(row, rowErrorMessage);
@@ -46,7 +46,7 @@ class FormValidation {
   colError() {
     let valid = true;
     const col = document.getElementById("col");
-    const colErrorMessage = document.getElementById("colError");
+    const colErrorMessage = document.querySelector("#colError");
 
     if (!col.checkValidity()) {
       this.displayNumError(col, colErrorMessage);
@@ -71,7 +71,7 @@ class FormValidation {
   levelError() {
     let valid = true;
     const level = document.getElementById("level");
-    const levelErrorMessage = document.getElementById("levelError");
+    const levelErrorMessage = document.querySelector("#levelError");
 
     if (!level.checkValidity()) {
       levelErrorMessage.textContent = "";

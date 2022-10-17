@@ -103,5 +103,11 @@ h4 {
     text-align: center;
 }
 
+/* Error message */
+.error {
+    font-size: 60%;
+    color: darkred;
+    border: 1px solid darkred;
+    width: 10rem;
 
-
+}
