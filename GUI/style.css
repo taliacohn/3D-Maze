@@ -82,12 +82,16 @@ input {
     background-color: #900;
     padding: 0px;
     border-radius: 5px;
-    font-size: 90%;
+    font-size: 70%;
+    text-align: center;
+    margin-left: 6rem;
+    font-family: Arial, Helvetica, sans-serif;
     /* width: 5rem; */
 }
 
 .error.active {
     padding: 2px;
+    width: 10rem;
 }
 
 /* maze styling */

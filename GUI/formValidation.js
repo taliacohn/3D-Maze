@@ -23,7 +23,7 @@ class FormValidation {
 
   /** Validate row/col input */
   rowError() {
-    const rows = document.getElementById("row");
+    const rows = document.getElementById("rows");
     const rowErrorMessage = document.querySelector("#rows + p.error");
 
     if (rows.checkValidity()) {
@@ -33,8 +33,10 @@ class FormValidation {
     }
 
     if (rows.validity.valueMissing) {
+      rowErrorMessage.textContent = "Enter a positive number.";
+    } else if (rows.validity.patternMismatch) {
       rowErrorMessage.textContent = "Enter a positive number greater than 2.";
-    } else {
+    } else if (rows.validity.rangeUnderflow) {
       rowErrorMessage.textContent = "Enter a positive number greater than 2.";
     }
     rowErrorMessage.className = "error active";
@@ -43,7 +45,7 @@ class FormValidation {
 
   colError() {
     const cols = document.getElementById("cols");
-    const colErrorMessage = document.querySelector("#rows + p.error");
+    const colErrorMessage = document.querySelector("#cols + p.error");
 
     if (cols.checkValidity()) {
       colErrorMessage.textContent = "";
@@ -52,8 +54,10 @@ class FormValidation {
     }
 
     if (cols.validity.valueMissing) {
+      colErrorMessage.textContent = "Enter a positive number.";
+    } else if (cols.validity.patternMismatch) {
       colErrorMessage.textContent = "Enter a positive number greater than 2.";
-    } else {
+    } else if (cols.validity.rangeUnderflow) {
       colErrorMessage.textContent = "Enter a positive number greater than 2.";
     }
     colErrorMessage.className = "error active";
@@ -62,7 +66,7 @@ class FormValidation {
 
   levelError() {
     const levels = document.getElementById("levels");
-    const levelErrorMessage = document.querySelector("#levels + span.error");
+    const levelErrorMessage = document.querySelector("#levels + p.error");
 
     if (levels.checkValidity()) {
       levelErrorMessage.textContent = "";
@@ -72,8 +76,12 @@ class FormValidation {
 
     if (levels.validity.valueMissing) {
       errorMessage.textContent = "Enter a positive number.";
-    } else {
-      errorMessage.textContent = "Enter a positive number.";
+    } else if (levels.validity.patternMismatch) {
+      levelErrorMessage.textContent =
+        "Enter a positive number of 1 or greater.";
+    } else if (levels.validity.rangeUnderflow) {
+      levelErrorMessage.textContent =
+        "Enter a positive number of 1 or greater.";
     }
     levelErrorMessage.className = "error active";
     return false;
