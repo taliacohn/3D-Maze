@@ -61,15 +61,15 @@ class FormValidation {
   }
 
   levelError() {
-    const levels = document.getElementById("levels")
+    const levels = document.getElementById("levels");
     const levelErrorMessage = document.querySelector("#levels + span.error");
 
     if (levels.checkValidity()) {
       levelErrorMessage.textContent = "";
       levelErrorMessage.className = "error";
       return true;
-    } 
-    
+    }
+
     if (levels.validity.valueMissing) {
       errorMessage.textContent = "Enter a positive number.";
     } else {
@@ -77,24 +77,23 @@ class FormValidation {
     }
     levelErrorMessage.className = "error active";
     return false;
-    }
   }
-
-  // loadGameError() {
-  //   const loadGameName = document.getElementById("loadMaze");
-  //   const loadGameErrorMessage = document.getElementById("loadError");
-
-  //   if (!loadGameName.checkValidity()) {
-  //     if (loadGameName.validity.valueMissing) {
-  //       this.displayNameError(loadGameName, loadGameErrorMessage);
-  //       loadGameErrorMessage.className = "error";
-  //     }
-  //   }
-
-  //   // if game not found...
-  //   loadGameErrorMessage.textContent = "No game matching this name.";
-  //   loadGameErrorMessage.className = "error";
-  // }
 }
+
+// loadGameError() {
+//   const loadGameName = document.getElementById("loadMaze");
+//   const loadGameErrorMessage = document.getElementById("loadError");
+
+//   if (!loadGameName.checkValidity()) {
+//     if (loadGameName.validity.valueMissing) {
+//       this.displayNameError(loadGameName, loadGameErrorMessage);
+//       loadGameErrorMessage.className = "error";
+//     }
+//   }
+
+//   // if game not found...
+//   loadGameErrorMessage.textContent = "No game matching this name.";
+//   loadGameErrorMessage.className = "error";
+// }
 
 export default FormValidation;

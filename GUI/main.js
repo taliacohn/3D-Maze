@@ -49,7 +49,10 @@ function newGame(e) {
     const welcomeMsg = document.getElementById("welcomeMessage");
     const welcomeMsgPar = document.querySelector("#welcomeMessage + p#welcome");
     const initialImage = document.getElementById("#mazeBox + div#initialImage");
-
+    const initImg = document.querySelector(
+      "#initialImage + img#initialRobotPic"
+    );
+    const initP = document.querySelector("#initialImage + p#initialMessage");
     // enter welcome message
     welcomeMsgPar.textContent = `Welcome ${name.value}. Let's play!`;
     welcomeMsgPar.style.color = "black";
@@ -57,6 +60,8 @@ function newGame(e) {
 
     //Hide form and initial picture
     initialImage.hidden = true;
+    initImg.hidden = true;
+    initP = true;
     startSection.hidden = true;
 
     //Generate new maze
