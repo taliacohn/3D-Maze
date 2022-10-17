@@ -3,7 +3,7 @@ import FormValidation from "./formValidation.js";
 import Player from "./player.js";
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 
-const form = document.getElementById("user-form");
+const form = document.getElementById("input-form");
 const name = document.getElementById("name");
 const numRows = document.getElementById("rows");
 const numCols = document.getElementById("cols");
@@ -25,32 +25,36 @@ const hintBtn = document.getElementById("hint");
 
 // Check form on input
 const newFormVal = new FormValidation();
+const nameErrorCheck = newFormVal.nameError();
+const rowErrorCheck = newFormVal.rowError();
+const colErrorCheck = newFormVal.colError();
+const levelErrorCheck = newFormVal.levelError();
 
-name.addEventListener("input", newFormVal.nameError);
-numRows.addEventListener("input", newFormVal.rowError);
-numCols.addEventListener("input", newFormVal.colError);
-numLevels.addEventListener("input", newFormVal.levelError);
+name.addEventListener("input", nameErrorCheck);
+numRows.addEventListener("input", rowErrorCheck);
+numCols.addEventListener("input", colErrorCheck);
+numLevels.addEventListener("input", levelErrorCheck);
 
 // Check form on submit
 form.addEventListener("submit", (e) => {
   validateForm(e);
 });
 
-function validateForm(form) {
+function validateForm(e) {
   const checkName = newFormVal.nameError();
   const checkRow = newFormVal.rowError();
   const checkCol = newFormVal.colError();
   const checkLevel = newFormVal.levelError();
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
-    form.preventDefault();
+    e.preventDefault();
   } else {
     //start game
     initialImage.hidden = true;
     form.hidden = true;
 
     // enter welcome message
-    welcomeMsg.textContent = `Welcome ${name.value}! Let's play`;
+    welcomeMsgPar.textContent = `Welcome ${name.value}! Let's play`;
     welcomeMsg.hidden = false;
 
     const genMaze = new DFSMaze3dGenerator(

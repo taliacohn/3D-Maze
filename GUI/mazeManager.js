@@ -32,7 +32,6 @@ class MazeManager {
     const levelMessage = document.getElementById("levelNum");
     const mazeBox = document.getElementById("mazeBox");
 
-    let width = (mazeBox.innerHTML = "");
     levelMessage.textContent = "";
 
     levelMessage.textContent = `Level ${level + 1}`;
@@ -82,3 +81,5 @@ class MazeManager {
     }
   }
 }
+
+export default MazeManager;

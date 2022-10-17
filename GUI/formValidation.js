@@ -80,6 +80,7 @@ class FormValidation {
     } else {
       levelErrorMessage.textContent = "";
       valid = true;
+      levelErrorMessage.classList.remove("error");
     }
   }
 
