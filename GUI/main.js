@@ -16,8 +16,28 @@ const solveGameBtn = document.getElementById("solveBtn");
 const resetBtn = document.getElementById("resentBtn");
 const hintBtn = document.getElementById("hint");
 
+// Check form on input
+const newFormVal = new FormValidation();
+
+name.addEventListener("input", newFormVal.nameError());
+numRows.addEventListener("input", newFormVal.rowError());
+numCols.addEventListener("input", newFormVal.colError());
+numLevels.addEventListener("input", newFormVal.levelError());
+
+// Check form on submit
 form.addEventListener("submit", (e) => {
   validateForm(e);
 });
 
-function validateForm(form) {}
+function validateForm(form) {
+  const checkName = newFormVal.nameError();
+  const checkRow = newFormVal.rowError();
+  const checkCol = newFormVal.colError();
+  const checkLevel = newFormVal.levelError();
+
+  if (!checkName || !checkRow || !checkCol || !checkLevel) {
+    form.preventDefault();
+  } else {
+    //start game
+  }
+}
