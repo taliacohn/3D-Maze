@@ -3,11 +3,16 @@
 class FormValidation {
   nameError() {
     let valid = true;
+
     const name = document.getElementById("name");
     let nameErrorMessage = document.querySelector("#name + span.error");
 
     if (!name.checkValidity()) {
-      this.displayNameError(name, nameErrorMessage);
+      if (name.validity.valueMissing) {
+        nameErrorMessage.textContent = "Enter your name.";
+      } else if (name.validity.patternMismatch) {
+        nameErrorMessage.textContext = "Only enter alphabetic letters.";
+      }
       valid = false;
       nameErrorMessage.className = "error active";
     } else {
@@ -18,21 +23,17 @@ class FormValidation {
     return valid;
   }
 
-  displayNameError(nameInput, nameError) {
-    if (nameInput.validity.valueMissing) {
-      nameError.textContent = "Enter your name.";
-    } else if (nameInput.validity.patternMismatch) {
-      nameError.textContext = "Only enter alphabetic letters.";
-    }
-  }
-
   rowError() {
     let valid = true;
     const row = document.getElementById("row");
     const rowErrorMessage = document.querySelector("#rows + span.error");
 
     if (!row.checkValidity()) {
-      this.displayNumError(row, rowErrorMessage);
+      if (row.validity.valueMissing) {
+        rowErrorMessage.textContent = "Enter positive number.";
+      } else {
+        rowErrorMessage.textContent = "Enter a positive number greater than 2.";
+      }
       valid = false;
       rowErrorMessage.className = "error active";
     } else {
@@ -49,7 +50,11 @@ class FormValidation {
     const colErrorMessage = document.querySelector("#rows + span.error");
 
     if (!col.checkValidity()) {
-      this.displayNumError(col, colErrorMessage);
+      if (row.validity.valueMissing) {
+        colErrorMessage.textContent = "Enter positive number.";
+      } else {
+        colErrorMessage.textContent = "Enter a positive number greater than 2.";
+      }
       valid = false;
       colErrorMessage.className = "error active";
     } else {
@@ -58,14 +63,6 @@ class FormValidation {
       valid = true;
     }
     return valid;
-  }
-
-  displayNumError(input, error) {
-    if (input.validity.valueMissing) {
-      error.textContent = "Enter positive number.";
-    } else {
-      error.textContent = "Enter a positive number greater than 2.";
-    }
   }
 
   levelError() {

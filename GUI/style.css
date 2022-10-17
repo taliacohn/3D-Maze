@@ -71,11 +71,6 @@ h4 {
 }
 
 /* Error message */
-input:invalid {
-    border-color: #900;
-    background-color: #fdd;
-}
-
 .error {
     font-size: 90%;
     border-radius: 5px;
