@@ -73,6 +73,7 @@ h4 {
 /* Error message */
 input {
     border: 1px solid #333;
+    background-color: white;
 }
 
 /* Invalid fields */

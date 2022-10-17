@@ -4,85 +4,80 @@ class FormValidation {
   /** Validate name input */
   nameError() {
     const name = document.getElementById("name");
-    const nameErrorMessage = document.querySelector("#name + span.error");
+    const nameErrorMessage = document.querySelector("#name + p.error");
 
     if (name.checkValidity()) {
       nameErrorMessage.textContent = "";
       nameErrorMessage.className = "error";
       return true;
-    } else {
-      showNameError(name, nameErrorMessage);
-      return false;
     }
-  }
 
-  showNameError(name, errorMessage) {
     if (name.validity.valueMissing) {
-      errorMessage.textContent = "Enter username";
+      nameErrorMessage.textContent = "Enter username";
     } else if (name.validity.patternMismatch) {
-      errorMessage.textContent = "Only enter alphabetic letters";
+      nameErrorMessage.textContent = "Only enter alphabetic letters";
     }
-    errorMessage.className = "error active";
+    nameErrorMessage.className = "error active";
+    return false;
   }
 
   /** Validate row/col input */
   rowError() {
     const rows = document.getElementById("row");
-    const rowErrorMessage = document.querySelector("#rows + span.error");
+    const rowErrorMessage = document.querySelector("#rows + p.error");
 
     if (rows.checkValidity()) {
       rowErrorMessage.textContent = "";
       rowErrorMessage.className = "error";
       return true;
-    } else {
-      showNumError(rows, rowErrorMessage);
-      return false;
     }
+
+    if (rows.validity.valueMissing) {
+      rowErrorMessage.textContent = "Enter a positive number greater than 2.";
+    } else {
+      rowErrorMessage.textContent = "Enter a positive number greater than 2.";
+    }
+    rowErrorMessage.className = "error active";
+    return false;
   }
 
   colError() {
     const cols = document.getElementById("cols");
-    const colErrorMessage = document.querySelector("#rows + span.error");
+    const colErrorMessage = document.querySelector("#rows + p.error");
 
     if (cols.checkValidity()) {
       colErrorMessage.textContent = "";
       colErrorMessage.className = "error";
       return true;
-    } else {
-      showNumError(cols, colErrorMessage);
-      return false;
     }
+
+    if (cols.validity.valueMissing) {
+      colErrorMessage.textContent = "Enter a positive number greater than 2.";
+    } else {
+      colErrorMessage.textContent = "Enter a positive number greater than 2.";
+    }
+    colErrorMessage.className = "error active";
+    return false;
   }
 
-  showNumError(input, errorMessage) {
-    if (input.validity.valueMissing) {
-      errorMessage.textContent = "Enter a positive number greater than 2.";
-    } else {
-      errorMessage.textContent = "Enter a positive number greater than 2.";
-    }
-    errorMessage.className = "error active";
-  }
-
-  levelError(levels) {
+  levelError() {
+    const levels = document.getElementById("levels")
     const levelErrorMessage = document.querySelector("#levels + span.error");
 
     if (levels.checkValidity()) {
       levelErrorMessage.textContent = "";
       levelErrorMessage.className = "error";
       return true;
-    } else {
-      showLevelError(levels, levelErrorMessage);
-      return false;
-    }
-  }
-
-  showLevelError(level, errorMessage) {
-    if (level.validity.valueMissing) {
+    } 
+    
+    if (levels.validity.valueMissing) {
       errorMessage.textContent = "Enter a positive number.";
     } else {
       errorMessage.textContent = "Enter a positive number.";
     }
-    errorMessage.className = "error active";
+    levelErrorMessage.className = "error active";
+    return false;
+    }
   }
 
   // loadGameError() {
