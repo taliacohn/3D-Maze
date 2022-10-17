@@ -18,26 +18,26 @@
     <div id="page">
         <section id="user-form">
             <h2>Ready to play?</h2>
-            <form id="input-form">
+            <form id="input-form" novalidate>
                 <div id="user-input">
                     <label id="name">Name</label>
                     <input type="text" id="name" required>
-                    <p id="nameError"></p>
+                    <span class="error"></span>
                 </div>
                 <div id="user-input">
                     <label id="rows">Rows</label>
                     <input type="number" id="rows" required min="3">
-                    <p id="rowError"></p>
+                    <span class="error"></span>
                 </div>
                 <div id="user-input">
                     <label id="cols">Columns</label>
                     <input type="number" id="cols" required min="3">
-                    <p id="colError"></p>
+                    <span class="error"></span>
                 </div>
                 <div id="user-input">
                     <label id="levels">Levels</label>
                     <input type="number" id="levels" required min="1">
-                    <p id="levelError"></p>
+                    <span class="error"></span>
                 </div>
                 <div>
                     <button id="startBtn">Start New Game</button>
@@ -50,7 +50,7 @@
                 <div id="user-input" class="load-input">
                     <label id="loadMaze">Name</label>
                     <input type="text" id="loadMaze">
-                    <p id="loadError"></p>
+                    <span id="loadError"></span>
                 </div>
                 <div>
                     <button id="loadMazebtn">Load Game</button>

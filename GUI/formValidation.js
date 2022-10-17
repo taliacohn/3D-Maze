@@ -4,15 +4,15 @@ class FormValidation {
   nameError() {
     let valid = true;
     const name = document.getElementById("name");
-    let nameErrorMessage = document.querySelector("#nameError");
+    let nameErrorMessage = document.querySelector("#name + span.error");
 
     if (!name.checkValidity()) {
       this.displayNameError(name, nameErrorMessage);
       valid = false;
-      nameErrorMessage.className = "error";
+      nameErrorMessage.className = "error active";
     } else {
       nameErrorMessage.textContent = "";
-      nameErrorMessage.classList.remove("error");
+      nameErrorMessage.className = "error";
       valid = true;
     }
     return valid;
@@ -29,15 +29,15 @@ class FormValidation {
   rowError() {
     let valid = true;
     const row = document.getElementById("row");
-    const rowErrorMessage = document.querySelector("#rowError");
+    const rowErrorMessage = document.querySelector("#rows + span.error");
 
     if (!row.checkValidity()) {
       this.displayNumError(row, rowErrorMessage);
       valid = false;
-      rowErrorMessage.className = "error";
+      rowErrorMessage.className = "error active";
     } else {
       rowErrorMessage.textContent = "";
-      rowErrorMessage.classList.remove("error");
+      rowErrorMessage.className = "error";
       valid = true;
     }
     return valid;
@@ -45,16 +45,16 @@ class FormValidation {
 
   colError() {
     let valid = true;
-    const col = document.getElementById("col");
-    const colErrorMessage = document.querySelector("#colError");
+    const col = document.getElementById("cols");
+    const colErrorMessage = document.querySelector("#rows + span.error");
 
     if (!col.checkValidity()) {
       this.displayNumError(col, colErrorMessage);
       valid = false;
-      colErrorMessage.className = "error";
+      colErrorMessage.className = "error active";
     } else {
       colErrorMessage.textContent = "";
-      colErrorMessage.classList.remove("error");
+      colErrorMessage.className = "error";
       valid = true;
     }
     return valid;
@@ -71,34 +71,35 @@ class FormValidation {
   levelError() {
     let valid = true;
     const level = document.getElementById("level");
-    const levelErrorMessage = document.querySelector("#levelError");
+    const levelErrorMessage = document.querySelector("#levels + span.error");
 
     if (!level.checkValidity()) {
       levelErrorMessage.textContent = "Enter a positive number.";
+      levelErrorMessage.className = "error active";
       valid = false;
-      levelErrorMessage.className = "error";
     } else {
       levelErrorMessage.textContent = "";
+      levelErrorMessage.className = "error";
       valid = true;
-      levelErrorMessage.classList.remove("error");
     }
+    return valid;
   }
 
-  loadGameError() {
-    const loadGameName = document.getElementById("loadMaze");
-    const loadGameErrorMessage = document.getElementById("loadError");
+  // loadGameError() {
+  //   const loadGameName = document.getElementById("loadMaze");
+  //   const loadGameErrorMessage = document.getElementById("loadError");
 
-    if (!loadGameName.checkValidity()) {
-      if (loadGameName.validity.valueMissing) {
-        this.displayNameError(loadGameName, loadGameErrorMessage);
-        loadGameErrorMessage.className = "error";
-      }
-    }
+  //   if (!loadGameName.checkValidity()) {
+  //     if (loadGameName.validity.valueMissing) {
+  //       this.displayNameError(loadGameName, loadGameErrorMessage);
+  //       loadGameErrorMessage.className = "error";
+  //     }
+  //   }
 
-    // if game not found...
-    loadGameErrorMessage.textContent = "No game matching this name.";
-    loadGameErrorMessage.className = "error";
-  }
+  //   // if game not found...
+  //   loadGameErrorMessage.textContent = "No game matching this name.";
+  //   loadGameErrorMessage.className = "error";
+  // }
 }
 
 export default FormValidation;

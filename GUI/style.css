@@ -71,12 +71,23 @@ h4 {
 }
 
 /* Error message */
+input:invalid {
+    border-color: #900;
+    background-color: #fdd;
+}
+
 .error {
-    font-size: 60%;
-    color: darkred;
+    font-size: 90%;
+    border-radius: 5px;
+    padding: 0px;
+    background-color: #900;
+    color: white;
     border: 1px solid darkred;
-    padding: 5px;
-    width: 5rem;
+    /* width: 5rem; */
+}
+
+.error.active {
+    padding: 2px;
 }
 
 /* maze styling */

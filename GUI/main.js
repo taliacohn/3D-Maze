@@ -3,7 +3,7 @@ import FormValidation from "./formValidation.js";
 import Player from "./player.js";
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 
-const form = document.getElementById("input-form");
+const form = document.querySelector("#user-form form");
 const name = document.getElementById("name");
 const numRows = document.getElementById("rows");
 const numCols = document.getElementById("cols");
