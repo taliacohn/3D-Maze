@@ -74,7 +74,6 @@ class FormValidation {
     const levelErrorMessage = document.querySelector("#levelError");
 
     if (!level.checkValidity()) {
-      levelErrorMessage.textContent = "";
       levelErrorMessage.textContent = "Enter a positive number.";
       valid = false;
       levelErrorMessage.className = "error";

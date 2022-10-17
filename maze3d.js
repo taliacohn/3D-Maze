@@ -20,6 +20,8 @@ class Maze3d {
    * @param {number} rows
    * @param {number} columns
    * @param {number} levels
+   * @param {Cell} start
+   * @param {Cell} goal
    */
   constructor(levels, rows, columns) {
     this.#rows = rows; // y

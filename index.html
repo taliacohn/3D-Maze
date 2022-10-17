@@ -26,17 +26,17 @@
                 </div>
                 <div id="user-input">
                     <label id="rows">Rows</label>
-                    <input type="number" id="rows" required>
+                    <input type="number" id="rows" required min="3">
                     <p id="rowError"></p>
                 </div>
                 <div id="user-input">
                     <label id="cols">Columns</label>
-                    <input type="number" id="cols" required>
+                    <input type="number" id="cols" required min="3">
                     <p id="colError"></p>
                 </div>
                 <div id="user-input">
                     <label id="levels">Levels</label>
-                    <input type="number" id="levels" required>
+                    <input type="number" id="levels" required min="1">
                     <p id="levelError"></p>
                 </div>
                 <div>
@@ -61,6 +61,10 @@
                 <button id="rules">Rules</button>
                 <p id="rules" hidden></p>
             </div>
+        </section>
+
+        <section id="welcomeMessage" hidden>
+            <p id="welcome"></p>
         </section>
 
         <section id="game">

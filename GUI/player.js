@@ -4,9 +4,8 @@ class Player {
   #row;
   #col;
 
-  constructor(level, row, col) {
-    this.player = document.createElement("img");
-    this.player.src = "./images/robot.jpg";
+  constructor(maze) {
+    this.src = "./images/robot.jpg";
     this.#level = level;
     this.#col = col;
     this.#row = row;
@@ -36,11 +35,11 @@ class Player {
     this.#col = num;
   }
 
-  //   changeLocation() {
-  //     this.level =
-  //     this.row =
-  //     this.col =
-  //   }
+  changeLocation(level, row, col) {
+    this.level = level;
+    this.row = row;
+    this.col = col;
+  }
 }
 
 export default Player;

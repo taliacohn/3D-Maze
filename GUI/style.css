@@ -67,6 +67,16 @@ input:focus {
 h4 {
     margin-top: 30px;
     margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+/* Error message */
+.error {
+    font-size: 60%;
+    color: darkred;
+    border: 1px solid darkred;
+    padding: 5px;
+    width: 5rem;
 }
 
 /* maze styling */
@@ -103,11 +113,3 @@ h4 {
     text-align: center;
 }
 
-/* Error message */
-.error {
-    font-size: 60%;
-    color: darkred;
-    border: 1px solid darkred;
-    width: 10rem;
-
-}
