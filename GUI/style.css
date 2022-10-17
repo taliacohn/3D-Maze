@@ -51,10 +51,10 @@ label {
     width: 70px;
 }
 
-input:focus {
+/* input:focus {
     outline: none;
     border: 3px solid rgb(117, 114, 114);
-}
+} */
 
 #user-input {
     margin-bottom: 10px;
@@ -71,13 +71,27 @@ h4 {
 }
 
 /* Error message */
+input {
+    border: 1px solid #333;
+}
+
+/* Invalid fields */
+input:invalid {
+    border-color: #900;
+    background-color: #fdd;
+}
+
+input:focus:invalid {
+    outline: none;
+}
+
+/* message */
 .error {
-    font-size: 90%;
-    border-radius: 5px;
-    padding: 0px;
-    background-color: #900;
     color: white;
-    border: 1px solid darkred;
+    background-color: #900;
+    padding: 0px;
+    border-radius: 5px;
+    font-size: 90%;
     /* width: 5rem; */
 }
 

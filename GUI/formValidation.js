@@ -1,85 +1,88 @@
 /** Checks validity of info submitted with form */
 
 class FormValidation {
+  /** Validate name input */
   nameError() {
-    let valid = true;
-
     const name = document.getElementById("name");
-    let nameErrorMessage = document.querySelector("#name + span.error");
+    const nameErrorMessage = document.querySelector("#name + span.error");
 
-    if (!name.checkValidity()) {
-      if (name.validity.valueMissing) {
-        nameErrorMessage.textContent = "Enter your name.";
-      } else if (name.validity.patternMismatch) {
-        nameErrorMessage.textContext = "Only enter alphabetic letters.";
-      }
-      valid = false;
-      nameErrorMessage.className = "error active";
-    } else {
+    if (name.checkValidity()) {
       nameErrorMessage.textContent = "";
       nameErrorMessage.className = "error";
-      valid = true;
+      return true;
+    } else {
+      showNameError(name, nameErrorMessage);
+      return false;
     }
-    return valid;
   }
 
+  showNameError(name, errorMessage) {
+    if (name.validity.valueMissing) {
+      errorMessage.textContent = "Enter username";
+    } else if (name.validity.patternMismatch) {
+      errorMessage.textContent = "Only enter alphabetic letters";
+    }
+    errorMessage.className = "error active";
+  }
+
+  /** Validate row/col input */
   rowError() {
-    let valid = true;
-    const row = document.getElementById("row");
+    const rows = document.getElementById("row");
     const rowErrorMessage = document.querySelector("#rows + span.error");
 
-    if (!row.checkValidity()) {
-      if (row.validity.valueMissing) {
-        rowErrorMessage.textContent = "Enter positive number.";
-      } else {
-        rowErrorMessage.textContent = "Enter a positive number greater than 2.";
-      }
-      valid = false;
-      rowErrorMessage.className = "error active";
-    } else {
+    if (rows.checkValidity()) {
       rowErrorMessage.textContent = "";
       rowErrorMessage.className = "error";
-      valid = true;
+      return true;
+    } else {
+      showNumError(rows, rowErrorMessage);
+      return false;
     }
-    return valid;
   }
 
   colError() {
-    let valid = true;
-    const col = document.getElementById("cols");
+    const cols = document.getElementById("cols");
     const colErrorMessage = document.querySelector("#rows + span.error");
 
-    if (!col.checkValidity()) {
-      if (row.validity.valueMissing) {
-        colErrorMessage.textContent = "Enter positive number.";
-      } else {
-        colErrorMessage.textContent = "Enter a positive number greater than 2.";
-      }
-      valid = false;
-      colErrorMessage.className = "error active";
-    } else {
+    if (cols.checkValidity()) {
       colErrorMessage.textContent = "";
       colErrorMessage.className = "error";
-      valid = true;
+      return true;
+    } else {
+      showNumError(cols, colErrorMessage);
+      return false;
     }
-    return valid;
   }
 
-  levelError() {
-    let valid = true;
-    const level = document.getElementById("level");
+  showNumError(input, errorMessage) {
+    if (input.validity.valueMissing) {
+      errorMessage.textContent = "Enter a positive number greater than 2.";
+    } else {
+      errorMessage.textContent = "Enter a positive number greater than 2.";
+    }
+    errorMessage.className = "error active";
+  }
+
+  levelError(levels) {
     const levelErrorMessage = document.querySelector("#levels + span.error");
 
-    if (!level.checkValidity()) {
-      levelErrorMessage.textContent = "Enter a positive number.";
-      levelErrorMessage.className = "error active";
-      valid = false;
-    } else {
+    if (levels.checkValidity()) {
       levelErrorMessage.textContent = "";
       levelErrorMessage.className = "error";
-      valid = true;
+      return true;
+    } else {
+      showLevelError(levels, levelErrorMessage);
+      return false;
     }
-    return valid;
+  }
+
+  showLevelError(level, errorMessage) {
+    if (level.validity.valueMissing) {
+      errorMessage.textContent = "Enter a positive number.";
+    } else {
+      errorMessage.textContent = "Enter a positive number.";
+    }
+    errorMessage.className = "error active";
   }
 
   // loadGameError() {
