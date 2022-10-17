@@ -5,14 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Maze</title>
+    <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <h1>3D <span class="color-text">Maze</span></h1>
+    </header>
     <div id="page">
         <section id="user-form">
+            <h2>Ready to play?</h2>
             <form>
-                <
+                <div id="user-input">
+                    <label id="name">Name</label>
+                    <input type="text" id="name" required>
+                    <p class="error" id="nameError"></p>
+                </div>
+                <div id="user-input">
+                    <label id="rows">Rows</label>
+                    <input type="number" id="rows" required>
+                    <p class="error" id="rowError"></p>
+                </div>
+                <div id="user-input">
+                    <label id="cols">Columns</label>
+                    <input type="number" id="cols" required>
+                    <p class="error" id="colError"></p>
+                </div>
+                <div id="user-input">
+                    <label id="levels">Levels</label>
+                    <input type="number" id="levels" required>
+                    <p class="error" id="levelError"></p>
+                </div>
+                <div>
+                    <button id="startBtn">Start New Game</button>
+                </div>
             </form>
+        
+
+            <div id="load">
+                <h4>Load Previous Game</h4>
+                <div id="user-input" class="load-input">
+                    <label id="loadMaze">Name</label>
+                    <input type="text" id="loadMaze">
+                    <p class="error" id="loadError"></p>
+                </div>
+                <div>
+                    <button id="loadMazebtn">Load Game</button>
+                </div>
+            </div>
+
+            <div id="rules">
+                <button id="rules">Rules</button>
+                <p id="rules" hidden></p>
+            </div>
         </section>
+
+        <section id="game">
+            <section id="maze">
+                <h3 id="levelNum"></h3>
+                <div id="mazeBox">
+                    <div id="initialImage">
+                        <img src="./images/robot.jpg" alt="Robot" id="initialRobotPic">
+                        <p id="initialMessage">Help me find<br> my friend!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gamePlayBtns" hidden>
+                <button id="solveBtn">Solve Game</button>
+                <button id="resetBtn">Reset to Start</button>
+                <button id="hint">Hint</button>
+            </section>
+
+            <!-- DO WE WANT THIS!?? -->
+            <section id="mazeLevelsImages">
+                <div id="levelImages"></div>
+            </section>
+        </section>
+        
     </div>
 </body>
 </html>
