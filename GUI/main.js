@@ -25,10 +25,10 @@ const startSection = document.querySelector("section#start-game");
 const newFormVal = new FormValidation();
 
 /** Check form on input */
-name.addEventListener("input", newFormVal.nameError);
-numRows.addEventListener("input", newFormVal.rowError);
-numCols.addEventListener("input", newFormVal.colError);
-numLevels.addEventListener("input", newFormVal.levelError);
+name.addEventListener("input", () => newFormVal.nameError());
+numRows.addEventListener("input", () => newFormVal.rowError());
+numCols.addEventListener("input", () => newFormVal.colError());
+numLevels.addEventListener("input", () => newFormVal.levelError());
 
 /** Check form on submit */
 form.addEventListener("submit", (e) => {

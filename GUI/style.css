@@ -76,16 +76,6 @@ input {
     background-color: white;
 }
 
-/* Invalid fields */
-input:invalid {
-    border-color: #900;
-    background-color: #fdd;
-}
-
-input:focus:invalid {
-    outline: none;
-}
-
 /* message */
 .error {
     color: white;
