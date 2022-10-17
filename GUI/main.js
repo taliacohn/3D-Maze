@@ -3,12 +3,6 @@ import FormValidation from "./formValidation.js";
 import Player from "./player.js";
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 
-const form = document.querySelector("#user-form form");
-const name = document.getElementById("name");
-const numRows = document.getElementById("rows");
-const numCols = document.getElementById("cols");
-const numLevels = document.getElementById("levels");
-
 const mazeGame = document.getElementById("mazeBox");
 const initialImage = document.getElementById("initialImage");
 const welcomeMsg = document.getElementById("welcomeMessage");
@@ -23,8 +17,16 @@ const solveGameBtn = document.getElementById("solveBtn");
 const resetBtn = document.getElementById("resentBtn");
 const hintBtn = document.getElementById("hint");
 
-// Check form on input
+/** Form Validation */
+const form = document.querySelector("#user-form form");
+const name = document.getElementById("name");
+const numRows = document.getElementById("rows");
+const numCols = document.getElementById("cols");
+const numLevels = document.getElementById("levels");
+
 const newFormVal = new FormValidation();
+
+/** Check form on input */
 const nameErrorCheck = newFormVal.nameError();
 const rowErrorCheck = newFormVal.rowError();
 const colErrorCheck = newFormVal.colError();
@@ -35,7 +37,7 @@ numRows.addEventListener("input", rowErrorCheck);
 numCols.addEventListener("input", colErrorCheck);
 numLevels.addEventListener("input", levelErrorCheck);
 
-// Check form on submit
+/** Check form on submit */
 form.addEventListener("submit", (e) => {
   validateForm(e);
 });
