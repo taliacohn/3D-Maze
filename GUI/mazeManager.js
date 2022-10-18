@@ -29,6 +29,7 @@ class MazeManager {
       Number(col)
     );
     this.#maze = genMaze.generate();
+    console.log(this.#maze.toString());
     this.#player = new Player(
       this.#maze,
       this.#maze.start.level,
@@ -53,7 +54,7 @@ class MazeManager {
     mazeBox.innerHTML = "";
     levelMessage.textContent = "";
 
-    if (this.#maze.level > 1) {
+    if (this.#maze.levels > 1) {
       levelMessage.textContent = `Floor ${level + 1}`;
       levelMessage.style.fontSize = "1.25rem";
     }
@@ -78,8 +79,15 @@ class MazeManager {
   }
 
   addDesign(cell, displayCell, x, y, rows, cols) {
+    if (cell.wallList.left && y !== 0) {
+      displayCell.style.borderLeft = "1px solid black";
+    }
+    if (cell.wallList.forward && x !== 0) {
+      displayCell.style.borderTop = "1px solid black";
+    }
+
     if (cell.wallList.goal) {
-      const goalImg = new Image(this.width - 2, this.height - 2);
+      const goalImg = new Image(this.width - 5, this.height - 5);
       goalImg.src = this.goalSrc;
       cell.wallList.goal = true;
       displayCell.appendChild(goalImg);
@@ -106,13 +114,6 @@ class MazeManager {
       up.src = "./GUI/images/arrowDown.png";
       displayCell.appendChild(down);
       displayCell.className = "cell down";
-    }
-
-    if (cell.wallList.forward && x !== 0) {
-      displayCell.style.borderTop = "1px solid black";
-    }
-    if (cell.wallList.right && y !== cols) {
-      displayCell.style.borderRight = "1px solid black";
     }
   }
 }

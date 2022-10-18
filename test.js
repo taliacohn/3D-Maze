@@ -17,7 +17,7 @@ import AStar from "./search-algorithms/aStar.js";
 // console.log(maze2.toString());
 // console.log(maze1.measureAlgorithmTime());
 
-const maze3 = new DFSMaze3dGenerator(2, 3, 3);
+const maze3 = new DFSMaze3dGenerator(1, 5, 5);
 let maze4 = maze3.generate();
 console.log(maze4.toString());
 console.log(maze3.measureAlgorithmTime());

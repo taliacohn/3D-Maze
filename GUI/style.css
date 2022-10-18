@@ -10,7 +10,7 @@
     margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px;
+    column-gap: 50px;
 }
 
 /* header styling */
@@ -120,6 +120,7 @@ input {
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    
 }
 
 /* .cell {

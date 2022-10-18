@@ -35,7 +35,6 @@ function newGame(e) {
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
     e.preventDefault();
-    console.log("preventing");
   }
 
   if (checkName && checkRow && checkCol && checkLevel) {
@@ -43,8 +42,5 @@ function newGame(e) {
     manager = new MazeManager();
     manager.createMaze(numLevels.value, numRows.value, numCols.value);
     manager.displayMaze();
-    console.log("should work");
-  } else {
-    console.log("did not work");
   }
 }
