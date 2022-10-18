@@ -7,7 +7,7 @@ let manager;
 
 /** Form Validation */
 
-const form = document.querySelector("form");
+const form = document.querySelector("#form");
 const name = document.getElementById("name");
 const numRows = document.getElementById("rows");
 const numCols = document.getElementById("cols");
@@ -35,12 +35,16 @@ function newGame(e) {
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
     e.preventDefault();
+    console.log("preventing");
   }
 
   if (checkName && checkRow && checkCol && checkLevel) {
     //Generate new maze
     manager = new MazeManager();
-    manager.createMaze(numLevels, numRows, numCols);
+    manager.createMaze(numLevels.value, numRows.value, numCols.value);
     manager.displayMaze();
+    console.log("should work");
+  } else {
+    console.log("did not work");
   }
 }

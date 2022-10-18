@@ -14,7 +14,7 @@ class DFSMaze3dGenerator extends Maze3dGenerator {
 
   generate() {
     const maze = super.generate();
-    let startValues = this.randomCell(maze.levels, maze.rows, maze.columns);
+    const startValues = this.randomCell(maze.levels, maze.rows, maze.columns);
     maze.start = maze.maze[startValues.level][startValues.row][startValues.col];
     maze.start.wallList.start = true;
 

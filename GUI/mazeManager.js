@@ -1,18 +1,14 @@
-import Cell from "../generators/cell.js";
-import Maze3d from "../maze3d.js";
+import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
+import Player from "./player.js";
 
 /** Represents maze game - manager of maze and player */
 class MazeManager {
   #maze;
-  #directions;
   #player;
 
   constructor() {
     this.#maze;
     this.#player;
-    this.up = this.#maze.cellInput.get("up");
-    this.down = this.#maze.cellInput.get("down");
-    this.upDown = this.#maze.cellInput.get("upDown");
     this.width;
     this.height;
   }
@@ -44,6 +40,8 @@ class MazeManager {
     const rows = this.#maze.rows;
     const cols = this.#maze.columns;
 
+    const level = this.#player.level;
+
     const levelMessage = document.getElementById("levelNum");
     const mazeBox = document.getElementById("mazeBox");
 
@@ -51,11 +49,10 @@ class MazeManager {
     levelMessage.textContent = "";
 
     this.width = mazeBox.clientWidth / this.columns;
-    mazeBox.style.width = this.width + "px";
     this.height = mazeBox.clientHeight / this.rows;
-    mazeBox.style.height = this.height + "px";
 
-    levelMessage.textContent = `Level ${level + 1}`;
+    levelMessage.textContent = `Floor ${level + 1}`;
+    levelMessage.style.fontSize = "1.5rem";
 
     for (let x = 0; x < rows; x++) {
       for (let y = 0; y < cols; y++) {
@@ -65,31 +62,39 @@ class MazeManager {
         displayCell.className = "cell";
         displayCell.dataset.id = location;
 
-        addDesign(cell, displayCell);
+        this.addDesign(cell, displayCell);
 
+        displayCell.style.boxSizing = "border-box";
         displayCell.style.flexBasis = (100 % cols) + "%";
+        displayCell.style.height = mazeBox.clientHeight / rows + "%";
+
+        mazeBox.appendChild(displayCell);
       }
     }
   }
 
   addDesign(cell, displayCell) {
+    const up = this.#maze.cellInput.get("up");
+    const down = this.#maze.cellInput.get("down");
+    const upDown = this.#maze.cellInput.get("upDown");
+
     if (!cell.wallList.up && !cell.wallList.down) {
-      displayCell.textContent = this.upDown;
+      displayCell.textContent = upDown;
       cell.className = "cell upDown";
     } else if (!cell.wallList.up) {
-      displayCell.textContent = this.up;
+      displayCell.textContent = up;
       cell.className = "cell up";
     } else if (!cell.wallList.down) {
-      displayCell.textContent = this.down;
+      displayCell.textContent = down;
       cell.className = "cell down";
     }
 
     if (cell.wallList.goal) {
-      displayCell.innerHTML += `<img src="./images/robot2.jpg" id="goal">`;
+      displayCell.innerHTML += `<img src=".GUI/images/robot2.jpg" id="goal">`;
     } else if (cell.wallList.start) {
       cell.wallList.player = true;
       cell.className = "cell player";
-      displayCell.innerHTML += `<img src="./images/robot.jpg" id="start">`;
+      displayCell.innerHTML += `<img src=".GUI/images/robot.jpg" id="start">`;
     }
 
     if (cell.wallList.right) {
@@ -104,8 +109,6 @@ class MazeManager {
     if (cell.wallList.down) {
       displayCell.style.borderBottom = "1px solid darkgrey";
     }
-
-    mazeBox.appendChild(displayCell);
   }
 }
 

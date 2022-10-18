@@ -18,7 +18,7 @@
     <div id="page">
         <section id="start-game">
             <h2>Ready to play?</h2>
-            <form novalidate>
+            <form novalidate action="#" id="form">
                 <div id="user-input">
                     <label for="name">Name</label>
                     <input type="text" id="name" required pattern="^[A-Za-z]+$">
@@ -76,7 +76,7 @@
         <section id="game">
             <section id="maze">
                 <h3 id="levelNum"></h3>
-                <div id="mazeBox"> </div>
+                <div id="mazeBox"></div>
             </section>
 
             <section id="gamePlayBtns" hidden>

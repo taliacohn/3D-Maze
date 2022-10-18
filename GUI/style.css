@@ -104,17 +104,19 @@ input {
 
 /* maze styling */
 #game {
-    margin-top: 2rem;
-    border: 4px black solid;
-    background-color: rgba(33, 143, 110, 0.435);
-    min-width: 100px;
-    max-width: 400px;
-    min-height: 100px;
-    max-height: 400px;
+    margin-top: 1rem;
     grid-column: 2;
 }
 
 #mazeBox {
+    border: 4px black solid;
+    width: 450px;
+    height: 450px;
+    min-width: 100px;
+    /* max-width: 400px; */
+    min-height: 100px;
+    /* max-height: 400px; */
+    background-color: rgba(33, 143, 110, 0.435);
     position: relative;
     display: flex;
     flex-wrap: wrap;
