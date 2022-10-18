@@ -7,9 +7,10 @@
 #page {
     /* DO I NEED MARGIN IF I WILL CHANGE MARGIN OF FORM */
     margin: 5rem; 
-    margin-top: 3rem;
+    margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
 }
 
 /* header styling */
@@ -33,6 +34,10 @@ h1 {
 
 /* form styling */
 
+#start-game {
+    margin-left: 7rem;
+}
+
 #user-form {
     grid-column: 1;
     justify-self: center;
@@ -51,11 +56,6 @@ label {
     width: 70px;
 }
 
-/* input:focus {
-    outline: none;
-    border: 3px solid rgb(117, 114, 114);
-} */
-
 #user-input {
     margin-bottom: 10px;
 }
@@ -68,6 +68,14 @@ h4 {
     margin-top: 30px;
     margin-bottom: 20px;
     font-size: 1.2rem;
+}
+
+#rules h4 {
+    margin-bottom: 5px;
+}
+
+#rules {
+    font-size: 0.75rem;
 }
 
 /* Error message */
@@ -96,7 +104,9 @@ input {
 
 /* maze styling */
 #game {
-    border: 1px black solid;
+    margin-top: 2rem;
+    border: 4px black solid;
+    background-color: rgba(33, 143, 110, 0.435);
     min-width: 100px;
     max-width: 400px;
     min-height: 100px;
@@ -106,6 +116,8 @@ input {
 
 #mazeBox {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #initialImage {
@@ -126,5 +138,10 @@ input {
 #initialMessage {
     font-size: 1.5rem;
     text-align: center;
+}
+
+#player {
+    width: 10px;
+    height: 20px;
 }
 
