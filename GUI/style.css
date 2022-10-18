@@ -122,6 +122,10 @@ input {
     flex-wrap: wrap;
 }
 
+/* .cell {
+    background-color: rgba(33, 143, 110, 0.28);
+} */
+
 #initialImage {
     position: absolute;
     display: flex;

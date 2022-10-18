@@ -5,7 +5,7 @@ class Player {
   #col;
 
   constructor(maze, level, col, row) {
-    this.src = "./images/robot.jpg";
+    this.src = "./GUI/images/player.png";
     this.#level = level;
     this.#col = col;
     this.#row = row;

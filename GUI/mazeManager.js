@@ -11,6 +11,7 @@ class MazeManager {
     this.#player;
     this.width;
     this.height;
+    this.goalSrc = "./GUI/images/end.png";
   }
 
   get maze() {
@@ -44,15 +45,18 @@ class MazeManager {
 
     const levelMessage = document.getElementById("levelNum");
     const mazeBox = document.getElementById("mazeBox");
+    mazeBox.style.backgroundColor = "inherit";
+
+    this.width = mazeBox.clientWidth / cols;
+    this.height = mazeBox.clientHeight / rows;
 
     mazeBox.innerHTML = "";
     levelMessage.textContent = "";
 
-    this.width = mazeBox.clientWidth / this.columns;
-    this.height = mazeBox.clientHeight / this.rows;
-
-    levelMessage.textContent = `Floor ${level + 1}`;
-    levelMessage.style.fontSize = "1.5rem";
+    if (this.#maze.level > 1) {
+      levelMessage.textContent = `Floor ${level + 1}`;
+      levelMessage.style.fontSize = "1.25rem";
+    }
 
     for (let x = 0; x < rows; x++) {
       for (let y = 0; y < cols; y++) {
@@ -62,52 +66,53 @@ class MazeManager {
         displayCell.className = "cell";
         displayCell.dataset.id = location;
 
-        this.addDesign(cell, displayCell);
+        this.addDesign(cell, displayCell, x, y, rows, cols);
 
-        displayCell.style.boxSizing = "border-box";
-        displayCell.style.flexBasis = (100 % cols) + "%";
-        displayCell.style.height = mazeBox.clientHeight / rows + "%";
+        displayCell.style.width = this.width + "px";
+        displayCell.style.height = this.height + "px";
 
+        displayCell.style.backgroundColor = "inherit";
         mazeBox.appendChild(displayCell);
       }
     }
   }
 
-  addDesign(cell, displayCell) {
-    const up = this.#maze.cellInput.get("up");
-    const down = this.#maze.cellInput.get("down");
-    const upDown = this.#maze.cellInput.get("upDown");
-
-    if (!cell.wallList.up && !cell.wallList.down) {
-      displayCell.textContent = upDown;
-      cell.className = "cell upDown";
-    } else if (!cell.wallList.up) {
-      displayCell.textContent = up;
-      cell.className = "cell up";
-    } else if (!cell.wallList.down) {
-      displayCell.textContent = down;
-      cell.className = "cell down";
-    }
-
+  addDesign(cell, displayCell, x, y, rows, cols) {
     if (cell.wallList.goal) {
-      displayCell.innerHTML += `<img src=".GUI/images/robot2.jpg" id="goal">`;
+      const goalImg = new Image(this.width - 2, this.height - 2);
+      goalImg.src = this.goalSrc;
+      cell.wallList.goal = true;
+      displayCell.appendChild(goalImg);
+      displayCell.className = "cell";
     } else if (cell.wallList.start) {
-      cell.wallList.player = true;
-      cell.className = "cell player";
-      displayCell.innerHTML += `<img src=".GUI/images/robot.jpg" id="start">`;
+      cell.wallList.start = true;
+      displayCell.className = "cell player";
+      const startImg = new Image(this.width - 2, this.height - 2);
+      startImg.src = this.#player.src;
+      displayCell.appendChild(startImg);
+      displayCell.className = "cell";
+    } else if (!cell.wallList.up && !cell.wallList.down) {
+      const upDown = new Image(this.width - 2, this.height - 2);
+      upDown.src = "./GUI/images/arrowUpDown.png";
+      displayCell.appendChild(upDown);
+      displayCell.className = "cell upDown";
+    } else if (!cell.wallList.up) {
+      const up = new Image(this.width - 2, this.height - 2);
+      up.src = "./GUI/images/arrowUp.png";
+      displayCell.appendChild(up);
+      displayCell.className = "cell up";
+    } else if (!cell.wallList.down) {
+      const down = new Image(this.width - 2, this.height - 2);
+      up.src = "./GUI/images/arrowDown.png";
+      displayCell.appendChild(down);
+      displayCell.className = "cell down";
     }
 
-    if (cell.wallList.right) {
-      displayCell.style.borderRight = "1px solid darkgrey";
+    if (cell.wallList.forward && x !== 0) {
+      displayCell.style.borderTop = "1px solid black";
     }
-    if (cell.wallList.left) {
-      displayCell.style.borderLeft = "1px solid darkgrey";
-    }
-    if (cell.wallList.up) {
-      displayCell.style.borderTop = "1px solid darkgrey";
-    }
-    if (cell.wallList.down) {
-      displayCell.style.borderBottom = "1px solid darkgrey";
+    if (cell.wallList.right && y !== cols) {
+      displayCell.style.borderRight = "1px solid black";
     }
   }
 }
