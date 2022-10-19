@@ -127,26 +127,6 @@ input {
     background-color: rgba(33, 143, 110, 0.28);
 } */
 
-#initialImage {
-    position: absolute;
-    display: flex;
-    /* flex-wrap: wrap; */
-    justify-content: center;
-    /* margin: 2rem; */
-}
-
-#initialRobotPic {
-    max-height: 50%;
-    max-width: 50%;
-    /* margin-right: 2rem; */
-    border-radius: 50%;
-}
-
-#initialMessage {
-    font-size: 1.5rem;
-    text-align: center;
-}
-
 #player {
     width: 10px;
     height: 20px;
