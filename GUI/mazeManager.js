@@ -59,15 +59,16 @@ class MazeManager {
       levelMessage.style.fontSize = "1.25rem";
     }
 
-    for (let x = 0; x < rows; x++) {
-      for (let y = 0; y < cols; y++) {
-        const cell = this.#maze.maze[level][x][y];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        /** @type {Cell} */
+        const cell = this.#maze.maze[level][row][col];
         const displayCell = document.createElement("div");
-        const location = `${level}${x}${y}`;
+        const location = `${level}${row}${col}`;
         displayCell.className = "cell";
         displayCell.dataset.id = location;
 
-        this.addDesign(cell, displayCell, x, y, rows, cols);
+        this.addDesign(cell, displayCell, row, col, rows, cols);
 
         displayCell.style.width = this.width + "px";
         displayCell.style.height = this.height + "px";
@@ -78,26 +79,23 @@ class MazeManager {
     }
   }
 
-  addDesign(cell, displayCell, x, y, rows, cols) {
-    if (cell.wallList.left && y !== 0) {
+  addDesign(cell, displayCell, row, col, rows) {
+    if (cell.wallList.left && col !== 0) {
       displayCell.style.borderLeft = "1px solid black";
     }
-    if (cell.wallList.forward && x !== 0) {
-      displayCell.style.borderTop = "1px solid black";
-    }
 
-    if (cell.wallList.goal) {
+    if (cell.wallList.start) {
+      cell.wallList.start = true;
+      displayCell.className = "cell player";
+      const startImg = new Image(this.width - 5, this.height - 10);
+      startImg.src = this.#player.src;
+      displayCell.appendChild(startImg);
+      displayCell.className = "cell";
+    } else if (cell.wallList.goal) {
       const goalImg = new Image(this.width - 5, this.height - 5);
       goalImg.src = this.goalSrc;
       cell.wallList.goal = true;
       displayCell.appendChild(goalImg);
-      displayCell.className = "cell";
-    } else if (cell.wallList.start) {
-      cell.wallList.start = true;
-      displayCell.className = "cell player";
-      const startImg = new Image(this.width - 2, this.height - 2);
-      startImg.src = this.#player.src;
-      displayCell.appendChild(startImg);
       displayCell.className = "cell";
     } else if (!cell.wallList.up && !cell.wallList.down) {
       const upDown = new Image(this.width - 2, this.height - 2);
@@ -114,6 +112,10 @@ class MazeManager {
       up.src = "./GUI/images/arrowDown.png";
       displayCell.appendChild(down);
       displayCell.className = "cell down";
+    }
+
+    if (cell.wallList.forward && row !== rows) {
+      displayCell.style.borderBottom = "1px solid black";
     }
   }
 }
