@@ -36,9 +36,7 @@ function newGame(e) {
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
     e.preventDefault();
-  }
-
-  if (checkName && checkRow && checkCol && checkLevel) {
+  } else if (checkName && checkRow && checkCol && checkLevel) {
     //Generate new maze
     manager = new MazeManager(numLevels.value, numRows.value, numCols.value);
     manager.createMaze(numLevels.value, numRows.value, numCols.value);
@@ -68,4 +66,12 @@ document.addEventListener("keydown", (e) => {
     }
     manager.playerMove(e.key);
   }
+});
+
+solveGameBtn.addEventListener("click", () => {
+  manager.solveGame();
+});
+
+hintBtn.addEventListener("click", () => {
+  manager.hint();
 });

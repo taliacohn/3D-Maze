@@ -29,7 +29,7 @@ console.log(maze3.measureAlgorithmTime());
 
 const adapter = new MazeAdapter(maze4);
 const dfs = new DepthFirstSearch();
-console.log(dfs.search(adapter));
+console.log(dfs.search(maze4.start, adapter));
 console.log(dfs.numOfNodesEvaluated);
 
 const bfs = new BreadthFirstSearch();

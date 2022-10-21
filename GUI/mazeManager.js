@@ -2,6 +2,8 @@ import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 import Player from "./player.js";
 import Directions from "../directions.js";
 import Cell from "../generators/cell.js";
+import DepthFirstSearch from "../search-algorithms/depthFirstSearch.js";
+import MazeAdapter from "../search-algorithms/adapter.js";
 
 /** Represents maze game - manager of maze and player */
 class MazeManager {
@@ -79,7 +81,7 @@ class MazeManager {
         const displayCell = document.createElement("div");
         const location = `${level}${row}${col}`;
         displayCell.className = "cell";
-        displayCell.dataset.id = location;
+        displayCell.setAttribute("id", location);
 
         this.addDesign(cell, displayCell, row, col, level);
 
@@ -148,7 +150,6 @@ class MazeManager {
   // check if keyboard move is valid, move player if it is
   playerMove(keyMove) {
     if (this.gamePlay) {
-      console.log(keyMove);
       const level = this.#player.level;
       const row = this.#player.row;
       const col = this.#player.col;
@@ -215,9 +216,45 @@ class MazeManager {
     }
   }
 
-  hint() {}
+  solutionPath() {
+    const currCell =
+      this.#maze.maze[this.#player.level][this.#player.row][this.#player.col];
+    const adapter = new MazeAdapter(this.#maze);
+    const DFSSearch = new DepthFirstSearch();
+    let path = DFSSearch.search(currCell, adapter);
+    return path;
+  }
 
-  solveGame() {}
+  hint() {
+    // from curr location
+    const path = this.solutionPath();
+    const nextMove = path[0];
+    const nextMoveCell = document.getElementById(
+      `${nextMove[0]}${nextMove[1]}${nextMove[2]}`
+    );
+
+    nextMoveCell.style.backgroundColor = "lightCoral";
+  }
+
+  solveGame() {
+    const path = this.solutionPath();
+    const numMoves = path.length;
+
+    let moveNum = 0;
+    const interval = setInterval(() => {
+      if (moveNum === numMoves) {
+        clearInterval(interval);
+      }
+
+      this.#player.level = path[moveNum][0];
+      this.#player.row = path[moveNum][1];
+      this.#player.col = path[moveNum][2];
+
+      this.displayMaze();
+      moveNum++;
+    }, 400);
+    return interval;
+  }
 }
 
 export default MazeManager;

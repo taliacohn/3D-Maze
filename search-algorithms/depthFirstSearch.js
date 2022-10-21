@@ -7,19 +7,22 @@ class DepthFirstSearch extends SearchAlgorithm {
   constructor() {
     super();
     this.#numOfNodesEvaluated;
+    this.visited;
   }
 
   get numOfNodesEvaluated() {
     return this.#numOfNodesEvaluated;
   }
 
-  search(searchable) {
+  getStartCell() {
     const startCell = searchable.startCell;
-    const goalCell = searchable.goalCell;
+    return startCell;
+  }
+
+  search(startCell, searchable) {
     let startNode = new Node(startCell, null, 0); // Node = state, prevNode, cost
-    let goalNode = new Node(goalCell, null, 0);
     let stack = new Array(); // LIFO - visited, but not explored
-    let visited = new Set(); // visited and explored
+    this.visited = new Set(); // visited and explored
 
     //let state = this.getState(startNode);
     stack.push(startNode); // visited, but not explored start node yet
@@ -35,18 +38,18 @@ class DepthFirstSearch extends SearchAlgorithm {
       };
 
       if (
-        !visited.has(
+        !this.visited.has(
           [currNodeState.level, currNodeState.row, currNodeState.col].toString()
         )
       ) {
-        visited.add(
+        this.visited.add(
           [currNodeState.level, currNodeState.row, currNodeState.col].toString()
         );
       }
 
       //check if node = goal
       if (super.checkGoal(node, searchable)) {
-        this.#numOfNodesEvaluated = visited.size;
+        this.#numOfNodesEvaluated = this.visited.size;
         return super.findPath(node); // return solution
       }
 
@@ -64,7 +67,7 @@ class DepthFirstSearch extends SearchAlgorithm {
             searchable.problem.maze[neighbor[0]][neighbor[1]][neighbor[2]];
           let childNode = new Node(childNodeState, node, 0);
           if (
-            !visited.has(
+            !this.visited.has(
               [
                 childNodeState.level,
                 childNodeState.row,
@@ -80,38 +83,5 @@ class DepthFirstSearch extends SearchAlgorithm {
     return false;
   }
 }
-
-//LIFO queue
-
-/*
-  first take current node at top of stack, add starting point onto the stack before the loop
-  then visit node, check if that's the solution. if yes, break
-  otherwise, visit every path we can get to from the current path
-  mark path as visited, push on stack 
-  if we get to end of stack, we pop the previous path off stack, and keep searching
-  makes assumption there is a solution 
-    while (true) {
-        currNode = stack.top();
-        path.push(curNode.id);
-        curNode.visited = true;
-        if (currNode.id === targetNode.id) {
-            break;
-        }
-
-        var unvisited = 0;
-        currNode.adj.forEach(function(id) {
-            var node = getNodebyId(graph, id);
-            if (!node.visited) {
-                stack.push(node);
-                unvisited += 1;
-            }
-        })
-
-        if (unvisited === 0) {
-            stack.pop();
-        }
-    }
-
-    */
 
 export default DepthFirstSearch;

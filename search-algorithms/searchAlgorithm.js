@@ -39,8 +39,10 @@ class SearchAlgorithm {
   }
 
   findPath(target) {
+    /** @type {Node} */
     let currNode = target;
     let path = [];
+
     while (currNode.parent) {
       let currNodeState = this.getState(currNode);
       path.unshift(currNodeState);

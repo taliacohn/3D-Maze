@@ -26,7 +26,8 @@ class SearchDemo {
     const BFSStatesVisited = BFSSearch.numOfNodesEvaluated;
 
     const DFSSearch = new DepthFirstSearch();
-    DFSSearch.search(adapter);
+    const startCell = DFSSearch.getStartCell();
+    DFSSearch.search(startCell, adapter);
     const DFSStatesVisited = DFSSearch.numOfNodesEvaluated;
 
     const AStarSearch = new AStar();
