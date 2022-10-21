@@ -1,14 +1,18 @@
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 import Player from "./player.js";
+import Directions from "../directions.js";
+import Cell from "../generators/cell.js";
 
 /** Represents maze game - manager of maze and player */
 class MazeManager {
   #maze;
   #player;
+  #directions;
 
   constructor() {
     this.#maze;
     this.#player;
+    this.#directions = new Directions();
     this.width;
     this.height;
     this.goalSrc = "./GUI/images/end.png";
@@ -20,6 +24,10 @@ class MazeManager {
 
   get player() {
     return this.#player;
+  }
+
+  get directions() {
+    return this.#directions;
   }
 
   createMaze(level, row, col) {
@@ -61,14 +69,13 @@ class MazeManager {
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        /** @type {Cell} */
         const cell = this.#maze.maze[level][row][col];
         const displayCell = document.createElement("div");
         const location = `${level}${row}${col}`;
         displayCell.className = "cell";
         displayCell.dataset.id = location;
 
-        this.addDesign(cell, displayCell, row, col, rows, cols);
+        this.addDesign(cell, displayCell, row, col, level);
 
         displayCell.style.width = this.width + "px";
         displayCell.style.height = this.height + "px";
@@ -79,13 +86,16 @@ class MazeManager {
     }
   }
 
-  addDesign(cell, displayCell, row, col, rows) {
+  addDesign(cell, displayCell, row, col, level) {
     if (cell.wallList.left && col !== 0) {
       displayCell.style.borderLeft = "1px solid black";
     }
 
-    if (cell.wallList.start) {
-      cell.wallList.start = true;
+    if (
+      this.#player.level === level &&
+      this.#player.row === row &&
+      this.#player.col === col
+    ) {
       displayCell.className = "cell player";
       const startImg = new Image(this.width - 5, this.height - 10);
       startImg.src = this.#player.src;
@@ -114,8 +124,45 @@ class MazeManager {
       displayCell.className = "cell down";
     }
 
-    if (cell.wallList.forward && row !== rows) {
+    if (cell.wallList.forward && row !== this.#maze.rows) {
       displayCell.style.borderBottom = "1px solid black";
+    }
+  }
+
+  resetToStart() {
+    const start = this.#maze.start;
+
+    this.#player.level = start.level;
+    this.#player.row = start.row;
+    this.#player.col = start.col;
+
+    this.displayMaze();
+  }
+
+  // check if keyboard move is valid, move player if it is
+  playerMove(keyMove) {
+    const keyOptions = new Map([
+      ["ArrowUp", "backward"],
+      ["ArrowDown", "forward"],
+      ["KeyW", "up"],
+      ["KeyS", "down"],
+      ["ArrowRight", "right"],
+      ["ArrowLeft", "left"],
+    ]);
+
+    const level = this.#player.level;
+    const row = this.#player.row;
+    const col = this.#player.col;
+
+    const currCell = this.#maze.maze[level][row][col];
+
+    if (keyOptions.has(keyMove)) {
+      let direction = keyOptions.get(keyMove);
+      if (this.#maze.safeCell(currCell, direction, this.#maze)) {
+        let directionCell = this.#directions.directions.get(direction);
+        this.#player.changeLocation(directionCell);
+      }
+      this.displayMaze();
     }
   }
 }

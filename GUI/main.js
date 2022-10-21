@@ -1,11 +1,5 @@
 import MazeManager from "./mazeManager.js";
 import FormValidation from "./formValidation.js";
-import Player from "./player.js";
-import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
-
-let manager;
-
-/** Form Validation */
 
 const form = document.querySelector("#form");
 const name = document.getElementById("name");
@@ -13,8 +7,15 @@ const numRows = document.getElementById("rows");
 const numCols = document.getElementById("cols");
 const numLevels = document.getElementById("levels");
 
-const newFormVal = new FormValidation();
+const gamePlayBtns = document.getElementById("gamePlayBtns");
+const resetBtn = document.getElementById("resetBtn");
+const solveGameBtn = document.getElementById("solveBtn");
+const hintBtn = document.getElementById("hint");
 
+const newFormVal = new FormValidation();
+const manager = new MazeManager();
+
+/** Form Validation */
 /** Check form on input */
 name.addEventListener("input", () => newFormVal.nameError());
 numRows.addEventListener("input", () => newFormVal.rowError());
@@ -39,8 +40,15 @@ function newGame(e) {
 
   if (checkName && checkRow && checkCol && checkLevel) {
     //Generate new maze
-    manager = new MazeManager();
     manager.createMaze(numLevels.value, numRows.value, numCols.value);
     manager.displayMaze();
+    gamePlayBtns.hidden = false;
   }
 }
+
+// Reset player on click of reset button
+resetBtn.addEventListener("click", manager.resetToStart);
+
+document.addEventListener("keydown", (e) => {
+  manager.playerMove(e);
+});

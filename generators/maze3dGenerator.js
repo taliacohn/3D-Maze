@@ -10,6 +10,7 @@ sample the system time again. Return the elapsed time as a string with proper un
 */
 
 import Maze3d from "../maze3d.js";
+import Directions from "../directions.js";
 
 class Maze3dGenerator {
   #levels;
@@ -25,14 +26,16 @@ class Maze3dGenerator {
     this.#rows = rows;
     this.#columns = columns;
 
-    this.#DIRECTIONS = new Map([
-      ["right", [0, 0, 1]],
-      ["left", [0, 0, -1]],
-      ["up", [1, 0, 0]],
-      ["down", [-1, 0, 0]],
-      ["forward", [0, 1, 0]],
-      ["backward", [0, -1, 0]],
-    ]);
+    this.#DIRECTIONS = new Directions();
+
+    // this.#DIRECTIONS = new Map([
+    //   ["right", [0, 0, 1]],
+    //   ["left", [0, 0, -1]],
+    //   ["up", [1, 0, 0]],
+    //   ["down", [-1, 0, 0]],
+    //   ["forward", [0, 1, 0]],
+    //   ["backward", [0, -1, 0]],
+    // ]);
   }
 
   get levels() {
@@ -137,7 +140,7 @@ class Maze3dGenerator {
 
   getUnvisitedNeighbors(cell, maze) {
     let cellNeighbors = new Map();
-    for (const [key, direction] of this.#DIRECTIONS.entries()) {
+    for (const [key, direction] of this.#DIRECTIONS.directions.entries()) {
       if (this.safeCell(cell, direction, maze)) {
         const neighbor =
           maze.maze[cell.level + direction[0]][cell.row + direction[1]][
@@ -153,7 +156,7 @@ class Maze3dGenerator {
 
   getAllNeighbors(cell, maze) {
     let cellNeighbors = new Map();
-    for (const [key, direction] of this.#DIRECTIONS.entries()) {
+    for (const [key, direction] of this.#DIRECTIONS.directions.entries()) {
       if (this.safeCell(cell, direction, maze)) {
         const neighbor =
           maze.maze[cell.level + direction[0]][cell.row + direction[1]][

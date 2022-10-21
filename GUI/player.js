@@ -4,11 +4,12 @@ class Player {
   #row;
   #col;
 
-  constructor(maze, level, col, row) {
+  constructor(maze, level, row, col) {
     this.src = "./GUI/images/player.png";
     this.#level = level;
     this.#col = col;
     this.#row = row;
+    this.maze = maze;
   }
 
   get level() {
@@ -35,10 +36,10 @@ class Player {
     this.#col = num;
   }
 
-  changeLocation(level, row, col) {
-    this.level = level;
-    this.row = row;
-    this.col = col;
+  changeLocation(directionCell) {
+    this.#level += directionCell[0];
+    this.#row += directionCell[1];
+    this.#col += directionCell[2];
   }
 }
 
