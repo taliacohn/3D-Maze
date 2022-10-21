@@ -8,6 +8,9 @@ class MazeManager {
   #maze;
   #player;
   #directions;
+  #levels;
+  #rows;
+  #cols;
 
   constructor() {
     this.#maze;
@@ -31,13 +34,13 @@ class MazeManager {
   }
 
   createMaze(level, row, col) {
-    const genMaze = new DFSMaze3dGenerator(
+    this.genMaze = new DFSMaze3dGenerator(
       Number(level),
       Number(row),
       Number(col)
     );
-    this.#maze = genMaze.generate();
-    console.log(this.#maze.toString());
+
+    this.#maze = this.genMaze.generate();
     this.#player = new Player(
       this.#maze,
       this.#maze.start.level,
@@ -141,6 +144,10 @@ class MazeManager {
 
   // check if keyboard move is valid, move player if it is
   playerMove(keyMove) {
+    const level = this.#player.level;
+    const row = this.#player.row;
+    const col = this.#player.col;
+
     const keyOptions = new Map([
       ["ArrowUp", "backward"],
       ["ArrowDown", "forward"],
@@ -150,20 +157,26 @@ class MazeManager {
       ["ArrowLeft", "left"],
     ]);
 
-    const level = this.#player.level;
-    const row = this.#player.row;
-    const col = this.#player.col;
-
+    /** @type {Cell} */
     const currCell = this.#maze.maze[level][row][col];
 
     if (keyOptions.has(keyMove)) {
-      let direction = keyOptions.get(keyMove);
-      if (this.#maze.safeCell(currCell, direction, this.#maze)) {
-        let directionCell = this.#directions.directions.get(direction);
-        this.#player.changeLocation(directionCell);
+      const directionKey = keyOptions.get(keyMove);
+      const direction = this.#directions.directions.get(directionKey);
+
+      const currWallList = currCell.wallList[directionKey];
+
+      // check if in borders and not crossing a wall
+      if (
+        this.genMaze.safeCell(currCell, direction, this.#maze) &&
+        !currWallList
+      ) {
+        this.#player.changeLocation(direction);
+        this.displayMaze();
       }
-      this.displayMaze();
     }
+
+    // check if at goal
   }
 }
 

@@ -37,9 +37,9 @@ class Player {
   }
 
   changeLocation(directionCell) {
-    this.#level += directionCell[0];
-    this.#row += directionCell[1];
-    this.#col += directionCell[2];
+    this.#level = this.#level + directionCell[0];
+    this.#row = this.#row + directionCell[1];
+    this.#col = this.#col + directionCell[2];
   }
 }
 

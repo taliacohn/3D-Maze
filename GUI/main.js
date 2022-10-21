@@ -13,7 +13,7 @@ const solveGameBtn = document.getElementById("solveBtn");
 const hintBtn = document.getElementById("hint");
 
 const newFormVal = new FormValidation();
-const manager = new MazeManager();
+let manager;
 
 /** Form Validation */
 /** Check form on input */
@@ -40,6 +40,7 @@ function newGame(e) {
 
   if (checkName && checkRow && checkCol && checkLevel) {
     //Generate new maze
+    manager = new MazeManager(numLevels.value, numRows.value, numCols.value);
     manager.createMaze(numLevels.value, numRows.value, numCols.value);
     manager.displayMaze();
     gamePlayBtns.hidden = false;
@@ -47,8 +48,23 @@ function newGame(e) {
 }
 
 // Reset player on click of reset button
-resetBtn.addEventListener("click", manager.resetToStart);
+resetBtn.addEventListener("click", () => {
+  manager.resetToStart();
+});
 
 document.addEventListener("keydown", (e) => {
-  manager.playerMove(e);
+  const keyPresses = [
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowRight",
+    "ArrowLeft",
+    "KeyW",
+    "KeyS",
+  ];
+  if (manager) {
+    if (keyPresses.includes(e.key)) {
+      e.view.event.preventDefault();
+    }
+    manager.playerMove(e.key);
+  }
 });
