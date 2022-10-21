@@ -75,7 +75,7 @@ class FormValidation {
     }
 
     if (levels.validity.valueMissing) {
-      errorMessage.textContent = "Enter a positive number.";
+      levelErrorMessage.textContent = "Enter a positive number.";
     } else if (levels.validity.patternMismatch) {
       levelErrorMessage.textContent =
         "Enter a positive number of 1 or greater.";

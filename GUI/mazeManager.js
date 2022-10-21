@@ -111,18 +111,18 @@ class MazeManager {
       displayCell.appendChild(goalImg);
       displayCell.className = "cell";
     } else if (!cell.wallList.up && !cell.wallList.down) {
-      const upDown = new Image(this.width - 2, this.height - 2);
+      const upDown = new Image(this.width - 5, this.height - 5);
       upDown.src = "./GUI/images/arrowUpDown.png";
       displayCell.appendChild(upDown);
       displayCell.className = "cell upDown";
     } else if (!cell.wallList.up) {
-      const up = new Image(this.width - 2, this.height - 2);
+      const up = new Image(this.width - 5, this.height - 5);
       up.src = "./GUI/images/arrowUp.png";
       displayCell.appendChild(up);
       displayCell.className = "cell up";
     } else if (!cell.wallList.down) {
-      const down = new Image(this.width - 2, this.height - 2);
-      up.src = "./GUI/images/arrowDown.png";
+      const down = new Image(this.width - 5, this.height - 5);
+      down.src = "./GUI/images/arrowDown.png";
       displayCell.appendChild(down);
       displayCell.className = "cell down";
     }
@@ -144,6 +144,7 @@ class MazeManager {
 
   // check if keyboard move is valid, move player if it is
   playerMove(keyMove) {
+    console.log(keyMove);
     const level = this.#player.level;
     const row = this.#player.row;
     const col = this.#player.col;
@@ -151,8 +152,8 @@ class MazeManager {
     const keyOptions = new Map([
       ["ArrowUp", "backward"],
       ["ArrowDown", "forward"],
-      ["KeyW", "up"],
-      ["KeyS", "down"],
+      ["w", "up"],
+      ["s", "down"],
       ["ArrowRight", "right"],
       ["ArrowLeft", "left"],
     ]);
