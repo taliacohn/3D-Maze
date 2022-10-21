@@ -105,12 +105,12 @@ class MazeManager {
       this.#player.col === col
     ) {
       displayCell.className = "cell player";
-      const startImg = new Image(this.width - 5, this.height - 10);
+      const startImg = new Image(this.width - 10, this.height - 10);
       startImg.src = this.#player.src;
       displayCell.appendChild(startImg);
       displayCell.className = "cell";
     } else if (cell.wallList.goal) {
-      const goalImg = new Image(this.width - 5, this.height - 5);
+      const goalImg = new Image(this.width - 10, this.height - 10);
       goalImg.src = this.goalSrc;
       cell.wallList.goal = true;
       displayCell.appendChild(goalImg);
@@ -232,8 +232,15 @@ class MazeManager {
     const nextMoveCell = document.getElementById(
       `${nextMove[0]}${nextMove[1]}${nextMove[2]}`
     );
+    const currCell = document.getElementById(
+      `${this.#player.level}${this.#player.row}${this.#player.row}`
+    );
 
-    nextMoveCell.style.backgroundColor = "lightCoral";
+    if (nextMove[0] !== this.#player.level) {
+      currCell.style.backgroundColor = "lightCoral";
+    } else {
+      nextMoveCell.style.backgroundColor = "lightCoral";
+    }
   }
 
   solveGame() {
