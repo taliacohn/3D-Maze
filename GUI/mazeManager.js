@@ -19,6 +19,7 @@ class MazeManager {
     this.width;
     this.height;
     this.goalSrc = "./GUI/images/end.png";
+    this.gamePlay;
   }
 
   get maze() {
@@ -47,6 +48,8 @@ class MazeManager {
       this.#maze.start.row,
       this.#maze.start.col
     );
+
+    this.gamePlay = true;
   }
 
   displayMaze() {
@@ -144,40 +147,72 @@ class MazeManager {
 
   // check if keyboard move is valid, move player if it is
   playerMove(keyMove) {
-    console.log(keyMove);
-    const level = this.#player.level;
-    const row = this.#player.row;
-    const col = this.#player.col;
+    if (this.gamePlay) {
+      console.log(keyMove);
+      const level = this.#player.level;
+      const row = this.#player.row;
+      const col = this.#player.col;
 
-    const keyOptions = new Map([
-      ["ArrowUp", "backward"],
-      ["ArrowDown", "forward"],
-      ["w", "up"],
-      ["s", "down"],
-      ["ArrowRight", "right"],
-      ["ArrowLeft", "left"],
-    ]);
+      const keyOptions = new Map([
+        ["ArrowUp", "backward"],
+        ["ArrowDown", "forward"],
+        ["w", "up"],
+        ["s", "down"],
+        ["ArrowRight", "right"],
+        ["ArrowLeft", "left"],
+      ]);
 
-    /** @type {Cell} */
-    const currCell = this.#maze.maze[level][row][col];
+      /** @type {Cell} */
+      const currCell = this.#maze.maze[level][row][col];
 
-    if (keyOptions.has(keyMove)) {
-      const directionKey = keyOptions.get(keyMove);
-      const direction = this.#directions.directions.get(directionKey);
+      if (keyOptions.has(keyMove)) {
+        const directionKey = keyOptions.get(keyMove);
+        const direction = this.#directions.directions.get(directionKey);
 
-      const currWallList = currCell.wallList[directionKey];
+        const currWallList = currCell.wallList[directionKey];
 
-      // check if in borders and not crossing a wall
-      if (
-        this.genMaze.safeCell(currCell, direction, this.#maze) &&
-        !currWallList
-      ) {
-        this.#player.changeLocation(direction);
-        this.displayMaze();
+        // check if in borders and not crossing a wall
+        if (
+          this.genMaze.safeCell(currCell, direction, this.#maze) &&
+          !currWallList
+        ) {
+          this.#player.changeLocation(direction);
+          this.displayMaze();
+        }
       }
     }
 
     // check if at goal
+    this.checkWin();
+  }
+
+  checkWin() {
+    if (
+      this.#player.level === this.#maze.goal.level &&
+      this.#player.row === this.#maze.goal.row &&
+      this.#player.col === this.#maze.goal.col
+    ) {
+      const mazeBox = document.getElementById("mazeBox");
+      const gameBtns = document.getElementById("gamePlayBtns");
+      mazeBox.firstChild.remove();
+      gameBtns.hidden = true;
+      mazeBox.innerHTML = "";
+      mazeBox.style.backgroundColor = "darkBlue";
+      const h2 = document.createElement("h2");
+      h2.textContent = "You win!";
+
+      h2.style.color = "white";
+      h2.style.backgroundColor = "darkBlue";
+      h2.style.fontSize = "5rem";
+
+      h2.style.position = "absolute";
+      h2.style.top = "30%";
+      h2.style.transform = "translateY(-40%)";
+      h2.style.left = "10%";
+
+      mazeBox.appendChild(h2);
+      this.gamePlay = false;
+    }
   }
 }
 

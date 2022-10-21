@@ -44,6 +44,7 @@ function newGame(e) {
     manager.createMaze(numLevels.value, numRows.value, numCols.value);
     manager.displayMaze();
     gamePlayBtns.hidden = false;
+    form.reset();
   }
 }
 
