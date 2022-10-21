@@ -214,6 +214,10 @@ class MazeManager {
       this.gamePlay = false;
     }
   }
+
+  hint() {}
+
+  solveGame() {}
 }
 
 export default MazeManager;
