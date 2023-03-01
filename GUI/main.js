@@ -11,6 +11,8 @@ const gamePlayBtns = document.getElementById("gamePlayBtns");
 const resetBtn = document.getElementById("resetBtn");
 const solveGameBtn = document.getElementById("solveBtn");
 const hintBtn = document.getElementById("hint");
+const saveGameBtn = document.getElementById("saveGameBtn");
+const loadGameBtn = document.getElementById("loadMazebtn");
 
 const newFormVal = new FormValidation();
 let manager;
@@ -29,21 +31,27 @@ form.addEventListener("submit", (e) => {
 
 /** If form validated, start new game */
 function newGame(e) {
+  e.preventDefault();
   const checkName = newFormVal.nameError();
   const checkRow = newFormVal.rowError();
   const checkCol = newFormVal.colError();
   const checkLevel = newFormVal.levelError();
 
   if (!checkName || !checkRow || !checkCol || !checkLevel) {
-    e.preventDefault();
+    console.log("didn't work");
   } else if (checkName && checkRow && checkCol && checkLevel) {
     //Generate new maze
-    manager = new MazeManager(numLevels.value, numRows.value, numCols.value);
-    manager.createMaze(numLevels.value, numRows.value, numCols.value);
-    manager.displayMaze();
-    gamePlayBtns.hidden = false;
-    form.reset();
+    startGame();
   }
+}
+
+function startGame() {
+  manager = new MazeManager();
+  manager.createMaze(numLevels.value, numRows.value, numCols.value);
+  manager.displayMaze();
+  gamePlayBtns.hidden = false;
+  form.reset();
+  console.log("worked");
 }
 
 // Reset player on click of reset button
@@ -74,4 +82,12 @@ solveGameBtn.addEventListener("click", () => {
 
 hintBtn.addEventListener("click", () => {
   manager.hint();
+});
+
+saveGameBtn.addEventListener("click", () => {
+  manager.saveGame(name.value);
+});
+
+loadGameBtn.addEventListener("click", () => {
+  manager.loadGame(name.value);
 });
