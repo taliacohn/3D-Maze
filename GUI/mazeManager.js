@@ -1,4 +1,3 @@
-import circularJSON from "../node_modules/circular-json/build/circular-json.max";
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 import Player from "./player.js";
 import Directions from "../directions.js";
@@ -16,6 +15,7 @@ class MazeManager {
   #cols;
 
   constructor() {
+    this.genMaze;
     this.#maze;
     this.#player;
     this.#directions = new Directions();
@@ -44,7 +44,9 @@ class MazeManager {
       Number(col)
     );
 
+    console.log(this.genMaze);
     this.#maze = this.genMaze.generate();
+    console.log(this.#maze);
     this.#player = new Player(
       this.#maze,
       this.#maze.start.level,
@@ -152,6 +154,7 @@ class MazeManager {
   playerMove(keyMove) {
     if (this.gamePlay) {
       const level = this.#player.level;
+
       const row = this.#player.row;
       const col = this.#player.col;
 
@@ -268,22 +271,50 @@ class MazeManager {
     const saveError = document.querySelector("#saveGameBtn + p.error");
 
     if (localStorage.getItem("maze" + name)) {
+      console.log(name);
+      console.log("maze" + name);
+      console.log(localStorage.getItem("maze" + name));
       saveError.textContent = "Game with this name saved";
     } else {
       saveError.textContent = "";
-      let mazeGame = circularJSON.stringify(this.#maze);
+      console.log(this.#maze);
+      console.log(this.#player);
+      console.log(this.genMaze);
+      let mazeGame = JSON.stringify(this.#maze);
+      let mazeGen = JSON.stringify(this.genMaze);
       localStorage.setItem("maze" + name, mazeGame);
+      localStorage.setItem("gen" + name, mazeGen);
     }
   }
 
   loadGame(name) {
-    const loadError = document.querySelector("#loadMazeBtn + p.error");
+    const loadError = document.querySelector("#loadMazebtn + p.error");
     if (!localStorage.getItem("maze" + name)) {
       loadError.textContent = "No game with this name saved.";
     } else {
-      loadError = "";
-      mazeStr = localStorage.getItem("maze" + name);
-      this.#maze = circularJSON.parse(mazeStr);
+      loadError.textContent = "";
+      let mazeStr = localStorage.getItem("maze" + name);
+
+      this.#maze = JSON.parse(mazeStr);
+
+      this.#player = new Player(
+        this.#maze,
+        this.#maze.start.level,
+        this.#maze.start.row,
+        this.#maze.start.col
+      );
+      this.#maze.rows = this.#maze.maze[0].length;
+      this.#maze.columns = this.#maze.maze[0][0].length;
+      this.#maze.levels = this.#maze.maze.length;
+
+      this.genMaze = new DFSMaze3dGenerator(
+        Number(this.#maze.levels),
+        Number(this.#maze.rows),
+        Number(this.#maze.columns)
+      );
+
+      console.log(this.#player);
+      this.gamePlay = true;
       this.displayMaze();
     }
   }

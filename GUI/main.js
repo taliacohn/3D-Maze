@@ -3,6 +3,7 @@ import FormValidation from "./formValidation.js";
 
 const form = document.querySelector("#form");
 const name = document.getElementById("name");
+const loadMazeName = document.getElementById("loadMazeName");
 const numRows = document.getElementById("rows");
 const numCols = document.getElementById("cols");
 const numLevels = document.getElementById("levels");
@@ -12,7 +13,7 @@ const resetBtn = document.getElementById("resetBtn");
 const solveGameBtn = document.getElementById("solveBtn");
 const hintBtn = document.getElementById("hint");
 const saveGameBtn = document.getElementById("saveGameBtn");
-const loadGameBtn = document.getElementById("loadMazebtn");
+const loadMazeBtn = document.getElementById("loadMazebtn");
 
 const newFormVal = new FormValidation();
 let manager;
@@ -26,6 +27,7 @@ numLevels.addEventListener("input", () => newFormVal.levelError());
 
 /** Check form on submit */
 form.addEventListener("submit", (e) => {
+  e.preventDefault();
   newGame(e);
 });
 
@@ -50,7 +52,7 @@ function startGame() {
   manager.createMaze(numLevels.value, numRows.value, numCols.value);
   manager.displayMaze();
   gamePlayBtns.hidden = false;
-  form.reset();
+  //form.reset();
   console.log("worked");
 }
 
@@ -85,9 +87,12 @@ hintBtn.addEventListener("click", () => {
 });
 
 saveGameBtn.addEventListener("click", () => {
+  console.log(name.value);
   manager.saveGame(name.value);
 });
 
-loadGameBtn.addEventListener("click", () => {
-  manager.loadGame(name.value);
+loadMazeBtn.addEventListener("click", () => {
+  manager = new MazeManager();
+  manager.loadGame(loadMazeName.value);
+  gamePlayBtns.hidden = false;
 });

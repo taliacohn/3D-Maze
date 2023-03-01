@@ -4,7 +4,7 @@ class Cell {
     this.level = level;
     this.row = row;
     this.col = col;
-    this.maze = maze;
+    //this.maze = maze;
 
     this.visited = false; //start as false
 

@@ -2,6 +2,7 @@
     "type": "module",
     "dependencies": {
         "circular-json": "^0.5.9",
-        "circular-json-es6": "^2.0.2"
+        "circular-json-es6": "^2.0.2",
+        "flatted": "^3.2.7"
     }
 }
