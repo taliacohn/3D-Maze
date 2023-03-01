@@ -1,3 +1,4 @@
+import circularJSON from "../node_modules/circular-json/build/circular-json.max";
 import DFSMaze3dGenerator from "../generators/DFSMaze3dGenerator.js";
 import Player from "./player.js";
 import Directions from "../directions.js";
@@ -261,6 +262,30 @@ class MazeManager {
       moveNum++;
     }, 400);
     return interval;
+  }
+
+  saveGame(name) {
+    const saveError = document.querySelector("#saveGameBtn + p.error");
+
+    if (localStorage.getItem("maze" + name)) {
+      saveError.textContent = "Game with this name saved";
+    } else {
+      saveError.textContent = "";
+      let mazeGame = circularJSON.stringify(this.#maze);
+      localStorage.setItem("maze" + name, mazeGame);
+    }
+  }
+
+  loadGame(name) {
+    const loadError = document.querySelector("#loadMazeBtn + p.error");
+    if (!localStorage.getItem("maze" + name)) {
+      loadError.textContent = "No game with this name saved.";
+    } else {
+      loadError = "";
+      mazeStr = localStorage.getItem("maze" + name);
+      this.#maze = circularJSON.parse(mazeStr);
+      this.displayMaze();
+    }
   }
 }
 

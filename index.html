@@ -1,91 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D Maze</title>
-    <link href="./GUI/style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&display=swap" rel="stylesheet">
+    <link href="./GUI/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&display=swap"
+      rel="stylesheet"
+    />
     <script src="./GUI/main.js" type="module"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>3D <span class="color-text">Maze</span></h1>
+      <h1>3D <span class="color-text">Maze</span></h1>
     </header>
     <div id="page">
-        <section id="start-game">
-            <h2>Ready to play?</h2>
-            <form novalidate action="#" id="form">
-                <div id="user-input">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required pattern="^[A-Za-z]+$">
-                    <p class="error" aria-live="polite"></p>
-                </div>
-                <div id="user-input">
-                    <label for="rows">Rows</label>
-                    <input type="number" id="rows" required pattern="^[0-9]+$" min="3">
-                    <p class="error" aria-live="polite"></p>
-                </div>
-                <div id="user-input">
-                    <label for="cols">Columns</label>
-                    <input type="number" id="cols" required pattern="^[0-9]+$" min="3">
-                    <p class="error" aria-live="polite"></p>
-                </div>
-                <div id="user-input">
-                    <label for="levels">Levels</label>
-                    <input type="number" id="levels" required pattern="^[0-9]+$" min="1">
-                    <p class="error" aria-live="polite"></p>
-                </div>
-                <div>
-                    <button id="startBtn">Start New Game</button>
-                </div>
-            </form>
-        
+      <section id="start-game">
+        <h2>Ready to play?</h2>
+        <form novalidate action="#" id="form">
+          <div id="user-input">
+            <label for="name">Name</label>
+            <input type="text" id="name" required pattern="^[A-Za-z]+$" />
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div id="user-input">
+            <label for="rows">Rows</label>
+            <input
+              type="number"
+              id="rows"
+              required
+              pattern="^[0-9]+$"
+              min="3"
+            />
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div id="user-input">
+            <label for="cols">Columns</label>
+            <input
+              type="number"
+              id="cols"
+              required
+              pattern="^[0-9]+$"
+              min="3"
+            />
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div id="user-input">
+            <label for="levels">Levels</label>
+            <input
+              type="number"
+              id="levels"
+              required
+              pattern="^[0-9]+$"
+              min="1"
+            />
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div>
+            <button id="startBtn">Start New Game</button>
+          </div>
+        </form>
 
-            <div id="load">
-                <h4>Load Previous Game</h4>
-                <div id="user-input" class="load-input">
-                    <label id="loadMaze">Name</label>
-                    <input type="text" id="loadMaze">
-                    <span id="loadError"></span>
-                </div>
-                <div>
-                    <button id="loadMazebtn">Load Game</button>
-                </div>
-            </div>
+        <div id="load">
+          <h4>Load Previous Game</h4>
+          <div id="user-input" class="load-input">
+            <label id="loadMaze">Name</label>
+            <input type="text" id="loadMaze" />
+            <span id="loadError"></span>
+          </div>
+          <div>
+            <button id="loadMazebtn">Load Game</button>
+            <p class="error" aria-live="polite"></p>
+          </div>
+        </div>
 
-            <div id="rules">
-                <h4>Rules</h4>
-                <div id="rules">
-                    <p>Help Mr.Robot find his friend in the maze!<br>
-                        Choose the size of the maze by filling in the columns, rows, and levels above. Make sure to check all the floors!
-                    </p>
-                    <p>Left arrow on keyboard (←): move left in maze</p>
-                    <p>Right arrow on keyboard (→): move right in maze</p>
-                    <p>Up arrow on keyboard (↑): move upwards in maze</p>
-                    <p>Down arrow on keyboard (↓): move down in maze</p>
-                    <p>W key (w): move up to next level</p>
-                    <p>S key (s): move down to level below</p>
-                </div>
-            </div>
+        <div id="rules">
+          <h4>Rules</h4>
+          <div id="rules">
+            <p>
+              Help Mr.Robot find his friend in the maze!<br />
+              Choose the size of the maze by filling in the columns, rows, and
+              levels above. Make sure to check all the floors!
+            </p>
+            <p>Left arrow on keyboard (←): move left in maze</p>
+            <p>Right arrow on keyboard (→): move right in maze</p>
+            <p>Up arrow on keyboard (↑): move upwards in maze</p>
+            <p>Down arrow on keyboard (↓): move down in maze</p>
+            <p>W key (w): move up to next level</p>
+            <p>S key (s): move down to level below</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="game">
+        <section id="maze">
+          <h3 id="levelNum"></h3>
+          <div id="mazeBox"></div>
         </section>
 
-        <section id="game">
-            <section id="maze">
-                <h3 id="levelNum"></h3>
-                <div id="mazeBox"></div>
-            </section>
-
-            <section id="gamePlayBtns" hidden>
-                <button id="solveBtn">Solve Game</button>
-                <button id="resetBtn">Reset</button>
-                <button id="hint">Hint</button>
-            </section>
+        <section id="gamePlayBtns" hidden>
+          <button id="solveBtn">Solve Game</button>
+          <button id="resetBtn">Reset</button>
+          <button id="hint">Hint</button>
+          <button id="saveGameBtn">Save Game</button>
+          <p class="error" aria-live="polite"></p>
         </section>
-        
+      </section>
     </div>
-</body>
+  </body>
 </html>
